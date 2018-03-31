@@ -1,6 +1,6 @@
 
 # estring
->__handle string__
+>__javascript style APIs for string__
 In Progressing.......
 
 # install
