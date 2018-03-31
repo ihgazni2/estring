@@ -1,10 +1,47 @@
 import struct
 import elist.elist as elel
 
+#strlen                string-length
 
-def length(s):
-    lngth = s.__len__()
+def length(s,**kwargs):
+    '''
+        # in python , the string-length means  unicode-char-length 
+        # in javascript, the length means how-many 16-bit unit
+        # for example:
+        # run in js 
+        var p = '\ud835\udc52' 
+        p 
+        p.length 
+        p.codePointAt(0)    
+        p.codePointAt(0).toString(16)
+        p.charCodeAt(0).toString(16)
+        p.charCodeAt(1).toString(16)
+        '\ud835\udc52'
+        # codePointAt(0) similiar to  ord in python
+        
+        chr(119890)
+        ord(chr(119890))
+        hex(119890)
+        
+        length(chr(119890))
+        length(chr(119890),style='js')
+    '''
+    if('style' in kwargs):
+        style = kwargs['style']
+    else:
+        style = 'py'
+    if(style == 'py'):
+        lngth = s.__len__()
+    else:
+        bs = s.encode('utf_16_be')
+        q = bs.__len__() // 2
+        r = bs.__len__() % 2
+        if(r == 0):
+            lngth = q
+        else:
+            lngth = q + 1
     return(lngth)
+
 
 #LE           Little- Endian
 #BE           Big-Endian
@@ -238,3 +275,5 @@ def pack_chnum(chnum,**kwargs):
 
 chnum2byts = pack_chnum
 encode_chnum = pack_chnum
+
+
