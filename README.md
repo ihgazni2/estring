@@ -22,6 +22,8 @@
 ├──2. [decode_chbyts](estring/Images/decode_chbyts.0.png)  <br>
 ├──3. [get_chbyts_bomtype\<1\>](estring/Images/get_chbyts_bomtype.0.png)  <br>
 ├──3. [get_chbyts_bomtype\<2\>](estring/Images/get_chbyts_bomtype.1.png)  <br>
+├──4. [pack_chstr](estring/Images/pack_chstr.0.png)  <br>
+
 
 
 
