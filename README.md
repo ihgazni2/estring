@@ -8,6 +8,7 @@
 ## javascript APIs
 -----------------------------------------------------------------------
 >├──0. [length](estring/Images/length.0.png)  <br>
+├──0. [length](estring/Images/length.1.png)  <br>
 ├──1. [fromCharCode](estring/Images/fromCharCode.0.png)  <br>
 
 
