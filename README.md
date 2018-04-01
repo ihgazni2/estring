@@ -13,7 +13,13 @@ In Progressing.......
 ├──0. [length](estring/Images/length.1.png)  <br>
 ├──1. [fromCharCode](estring/Images/fromCharCode.0.png)  <br>
 ├──2. [fromCodePoint](estring/Images/fromCodePoint.0.png)  <br>
+-----------------------------------------------------------------------
 
+
+## supplementary APIs
+-----------------------------------------------------------------------
+>├──0. [divide](estring/Images/divide.0.png)  <br>
+-----------------------------------------------------------------------
 
 
 
@@ -41,7 +47,7 @@ In Progressing.......
 ├──9. [pack_str](estring/Images/pack_str.0.png)  <br>
 ├──9. [encode_str](estring/Images/pack_str.0.png)  <br>
 ├──9. [str2bytstrm](estring/Images/pack_str.0.png)  <br>
-
-
-
+├──10. [slash_show](estring/Images/slash_show.0.png)  <br>
+├──11. [bytstrm2hex](estring/Images/bytstrm2hex.0.png)  <br>
+├──12. [hex2bytstrm](estring/Images/hex2bytstrm.0.png)  <br>
 
