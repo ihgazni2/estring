@@ -9,8 +9,8 @@ In Progressing.......
 
 ## javascript APIs
 -----------------------------------------------------------------------
->├──0. [length](estring/Images/length.0.png)  <br>
-├──0. [length](estring/Images/length.1.png)  <br>
+>├──0. [length\<0\>](estring/Images/length.0.png)  <br>
+├──0. [length\<1\>](estring/Images/length.1.png)  <br>
 ├──1. [fromCharCode](estring/Images/fromCharCode.0.png)  <br>
 ├──2. [fromCodePoint](estring/Images/fromCodePoint.0.png)  <br>
 -----------------------------------------------------------------------
