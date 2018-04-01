@@ -13,6 +13,9 @@ In Progressing.......
 ├──0. [length\<1\>](estring/Images/length.1.png)  <br>
 ├──1. [fromCharCode](estring/Images/fromCharCode.0.png)  <br>
 ├──2. [fromCodePoint](estring/Images/fromCodePoint.0.png)  <br>
+├──3. [charAt\<1\>](estring/Images/charAt.0.png)  <br>
+├──3. [charAt\<2\>](estring/Images/charAt.1.png)  <br>
+
 -----------------------------------------------------------------------
 
 
@@ -69,18 +72,18 @@ In Progressing.......
 ├──28. [bytnums2str](estring/Images/bytnums2str.0.png)  <br>
 ├──29. [str2us](estring/Images/str2us.0.png)  <br>
 ├──30. [us2str](estring/Images/us2str.0.png)  <br>
-├──23. [](estring/Images/.0.png)  <br>
-├──23. [](estring/Images/.0.png)  <br>
-├──23. [](estring/Images/.0.png)  <br>
-├──23. [](estring/Images/.0.png)  <br>
-├──23. [](estring/Images/.0.png)  <br>
-├──23. [](estring/Images/.0.png)  <br>
-├──23. [](estring/Images/.0.png)  <br>
-├──23. [](estring/Images/.0.png)  <br>
-├──23. [](estring/Images/.0.png)  <br>
-├──23. [](estring/Images/.0.png)  <br>
-├──23. [](estring/Images/.0.png)  <br>
-├──23. [](estring/Images/.0.png)  <br>
+├──31. [hex2bytnums](estring/Images/hex2bytnums.0.png)  <br>
+├──32. [bytnums2hex](estring/Images/bytnums2hex.0.png)  <br>
+├──33. [hex2chnums](estring/Images/hex2chnums.0.png)  <br>
+├──34. [chnums2hex](estring/Images/chnums2hex.0.png)  <br>
+├──35. [hex2us](estring/Images/hex2us.0.png)  <br>
+├──36. [us2hex](estring/Images/us2hex.0.png)  <br>
+├──37. [chnums2bytnums](estring/Images/chnums2bytnums.0.png)  <br>
+├──38. [bytnums2chnums](estring/Images/bytnums2chnums.0.png)  <br>
+├──39. [chnums2us](estring/Images/chnums2us.0.png)  <br>
+├──40. [us2chnums](estring/Images/us2chnums.0.png)  <br>
+├──41. [bytnums2us](estring/Images/bytnums2us.0.png)  <br>
+├──42. [us2bytnums](estring/Images/us2bytnums.0.png)  <br>
 ├──23. [](estring/Images/.0.png)  <br>
 ├──23. [](estring/Images/.0.png)  <br>
 ├──23. [](estring/Images/.0.png)  <br>
