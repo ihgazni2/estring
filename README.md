@@ -25,7 +25,7 @@ In Progressing.......
 
 -----------------------------------------------------------------------
 
-## internal char-bytes functions
+## encode decode APIs
 -----------------------------------------------------------------------
 >├──0. [get_bominfo](estring/Images/get_bominfo.0.png)  <br>
 ├──1. [remove_bom](estring/Images/remove_bom.0.png)  <br>
@@ -61,14 +61,14 @@ In Progressing.......
 ├──20. [us2bytstrm\<1\>](estring/Images/us2bytstrm.0.png)  <br>
 ├──21. [us2bytstrm\<2\>](estring/Images/us2bytstrm.1.png)  <br>
 ├──22. [us2bytstrm\<3\>](estring/Images/us2bytstrm.2.png)  <br>
-├──23. [](estring/Images/.0.png)  <br>
-├──23. [](estring/Images/.0.png)  <br>
-├──23. [](estring/Images/.0.png)  <br>
-├──23. [](estring/Images/.0.png)  <br>
-├──23. [](estring/Images/.0.png)  <br>
-├──23. [](estring/Images/.0.png)  <br>
-├──23. [](estring/Images/.0.png)  <br>
-├──23. [](estring/Images/.0.png)  <br>
+├──23. [str2hex](estring/Images/str2hex.0.png)  <br>
+├──24. [hex2str](estring/Images/hex2str.0.png)  <br>
+├──25. [str2chnums](estring/Images/str2chnums.0.png)  <br>
+├──26. [chnums2str](estring/Images/chnums2str.0.png)  <br>
+├──27. [str2bytnums](estring/Images/str2bytnums.0.png)  <br>
+├──28. [bytnums2str](estring/Images/bytnums2str.0.png)  <br>
+├──29. [str2us](estring/Images/str2us.0.png)  <br>
+├──30. [us2str](estring/Images/us2str.0.png)  <br>
 ├──23. [](estring/Images/.0.png)  <br>
 ├──23. [](estring/Images/.0.png)  <br>
 ├──23. [](estring/Images/.0.png)  <br>
