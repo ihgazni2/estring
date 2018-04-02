@@ -19,7 +19,6 @@ In Progressing.......
 ├──4. [charCodeAt\<2\>](estring/Images/charCodeAt.1.png)  <br>
 ├──5. [codePointAt\<1\>](estring/Images/codePointAt.0.png)  <br>
 ├──5. [codePointAt\<2\>](estring/Images/codePointAt.1.png)  <br>
-
 ├──19. [slice\<0\>](estring/Images/slice.0.png)  <br>
 ├──19. [slice\<1\>](estring/Images/slice.1.png)  <br>
 -----------------------------------------------------------------------
