@@ -15,6 +15,11 @@ In Progressing.......
 ├──2. [fromCodePoint](estring/Images/fromCodePoint.0.png)  <br>
 ├──3. [charAt\<1\>](estring/Images/charAt.0.png)  <br>
 ├──3. [charAt\<2\>](estring/Images/charAt.1.png)  <br>
+├──4. [charCodeAt\<1\>](estring/Images/charCodeAt.0.png)  <br>
+├──4. [charCodeAt\<2\>](estring/Images/charCodeAt.1.png)  <br>
+├──5. [codePointAt\<1\>](estring/Images/codePointAt.0.png)  <br>
+├──5. [codePointAt\<2\>](estring/Images/codePointAt.1.png)  <br>
+
 
 -----------------------------------------------------------------------
 
@@ -22,6 +27,8 @@ In Progressing.......
 ## supplementary APIs
 -----------------------------------------------------------------------
 >├──0. [divide](estring/Images/divide.0.png)  <br>
+├──1. [slice](estring/Images/slice.0.png)  <br>
+├──2. [slice](estring/Images/slice.1.png)  <br>
 -----------------------------------------------------------------------
 
 
@@ -84,11 +91,18 @@ In Progressing.......
 ├──40. [us2chnums](estring/Images/us2chnums.0.png)  <br>
 ├──41. [bytnums2us](estring/Images/bytnums2us.0.png)  <br>
 ├──42. [us2bytnums](estring/Images/us2bytnums.0.png)  <br>
-├──23. [str_code_points\<0\>](estring/Images/str_code_points.0.png)  <br>
-├──23. [str_code_points\<1\>](estring/Images/str_code_points.1.png)  <br>
-├──23. [](estring/Images/.0.png)  <br>
-├──23. [](estring/Images/.0.png)  <br>
-├──23. [](estring/Images/.0.png)  <br>
-├──23. [](estring/Images/.0.png)  <br>
-├──23. [](estring/Images/.0.png)  <br>
-├──23. [](estring/Images/.0.png)  <br>
+├──43. [str_code_points\<0\>](estring/Images/str_code_points.0.png)  <br>
+├──44. [str_code_points\<1\>](estring/Images/str_code_points.1.png)  <br>
+├──45. [str_jschar_points](estring/Images/str_jschar_points.0.png)  <br>
+├──46. [pychpoints2jscharpoints](estring/Images/pychpoints2jscharpoints.0.png)  <br>
+├──47. [jscharpoints2pychpoints](estring/Images/jscharpoints2pychpoints.0.png)  <br>
+├──48. [us2uarr](estring/Images/us2uarr.0.png)  <br>
+├──49. [uarr2us](estring/Images/uarr2us.0.png)  <br>
+├──50. [uarr2jscharr](estring/Images/uarr2jscharr.0.png)  <br>
+├──51. [uarr2str](estring/Images/uarr2str.0.png)  <br>
+├──52. [str2uarr](estring/Images/str2uarr.0.png)  <br>
+├──53. [str2jscharr](estring/Images/str2jscharr.0.png)  <br>
+├──54. [](estring/Images/.0.png)  <br>
+├──55. [](estring/Images/.0.png)  <br>
+├──56. [](estring/Images/.0.png)  <br>
+
