@@ -19,6 +19,12 @@ In Progressing.......
 ├──4. [charCodeAt\<2\>](estring/Images/charCodeAt.1.png)  <br>
 ├──5. [codePointAt\<1\>](estring/Images/codePointAt.0.png)  <br>
 ├──5. [codePointAt\<2\>](estring/Images/codePointAt.1.png)  <br>
+├──6. [concat](estring/Images/concat.0.png)  <br>
+├──7. [endsWith](estring/Images/endsWith.0.png)  <br>
+├──8. [includes](estring/Images/includes.0.png)  <br>
+├──9. [indexOf](estring/Images/indexOf.0.png)  <br>
+├──10. [padEnd](estring/Images/padEnd.0.png)  <br>
+├──11. [padStart](estring/Images/padStart.0.png)  <br>
 ├──19. [slice\<0\>](estring/Images/slice.0.png)  <br>
 ├──19. [slice\<1\>](estring/Images/slice.1.png)  <br>
 -----------------------------------------------------------------------
@@ -27,7 +33,7 @@ In Progressing.......
 ## supplementary APIs
 -----------------------------------------------------------------------
 >├──0. [divide](estring/Images/divide.0.png)  <br>
-
+├──1. [indexesAll](estring/Images/indexesAll.0.png)  <br>
 -----------------------------------------------------------------------
 
 
