@@ -1,46 +1,6 @@
 import struct
 import elist.elist as elel
-
-#strlen                string-length
-
-def length(s,**kwargs):
-    '''
-        # in python , the string-length means  unicode-char-length 
-        # in javascript, the length means how-many 16-bit unit
-        # for example:
-        # run in js 
-        var p = '\ud835\udc52' 
-        p 
-        p.length 
-        p.codePointAt(0)    
-        p.codePointAt(0).toString(16)
-        p.charCodeAt(0).toString(16)
-        p.charCodeAt(1).toString(16)
-        '\ud835\udc52'
-        # codePointAt(0) similiar to  ord in python
-        
-        chr(119890)
-        ord(chr(119890))
-        hex(119890)
-        
-        length(chr(119890))
-        length(chr(119890),style='js')
-    '''
-    if('style' in kwargs):
-        style = kwargs['style']
-    else:
-        style = 'py'
-    if(style == 'py'):
-        lngth = s.__len__()
-    else:
-        bs = s.encode('utf_16_be')
-        q = bs.__len__() // 2
-        r = bs.__len__() % 2
-        if(r == 0):
-            lngth = q
-        else:
-            lngth = q + 1
-    return(lngth)
+import re
 
 
 #LE           Little- Endian
@@ -375,6 +335,156 @@ def pack_str(s,**kwargs):
 encode_str = pack_str
 str2bytstrm = pack_str
 
+
+#str2hex                 string-in-hex
+#hex2str                 hex-to-string
+def str2hex(s,**kwargs):
+    '''
+        bs = b'O`N\xecY}\xd85\xdcR'
+        s = bs.decode('utf_16_be')
+        s
+        str2hex(s,slashx=True)
+        str2hex(s,slashx=False)
+    '''
+    bs = str2bytstrm(s,**kwargs)
+    hs = bytstrm2hex(bs,**kwargs)
+    return(hs)
+
+def hex2str(hs,**kwargs):
+    '''
+        hs = '4f604eec597dd835dc52'
+        hex2str(hs,style='js')
+        hs = '\\x4f\\x60\\x4e\\xec\\x59\\x7d\\xd8\\x35\\xdc\\x52'
+        hex2str(hs,style='js')
+        hs = '\\x5c\\x75\\x34\\x66\\x36\\x30\\x5c\\x75\\x34\\x65\\x65\\x63\\x5c\\x75\\x35\\x39\\x37\\x64\\x5c\\x55\\x30\\x30\\x30\\x31\\x64\\x34\\x35\\x32'
+        hex2str(hs,style='py')
+        hs = '\\xe4\\xbd\\xa0\\xe4\\xbb\\xac\\xe5\\xa5\\xbd\\xf0\\x9d\\x91\\x92'
+        hex2str(hs,encode='utf_8')
+    '''
+    bs = hex2bytstrm(hs,**kwargs)
+    s = bytstrm2str(bs,**kwargs)
+    return(s)
+
+#str2chnums              string-to-char-numbers
+#chnums2str              char-numbers-to-string
+def str2chnums(s,**kwargs):
+    '''
+        s = '你好吗'
+        cns = str2chnums(s)
+        cns
+    '''
+    arr = list(s)
+    cns = elel.array_map(arr,ord)
+    return(cns)
+
+def chnums2str(cns,**kwargs):
+    '''
+        cns = [20320, 22909, 21527]
+        chnums2str(cns)
+    '''
+    arr = elel.array_map(cns,chr)
+    s = elel.join(arr,'')
+    return(s)
+
+
+#str2bytnums             string-to-byte-numbers
+#bytnums2str             byte-numbers-to-string
+def str2bytnums(s,**kwargs):
+    '''
+        s = '你们好'
+        str2bytnums(s)
+        str2bytnums(s,style='js')
+        str2bytnums(s,encode='utf_16_be')
+        str2bytnums(s,style='py')
+        str2bytnums(s,encode='raw_unicode_escape')
+        str2bytnums(s,encode='utf_8')
+    '''
+    bs = str2bytstrm(s,**kwargs)
+    bns = strm2bytnums(bs)
+    return(bns)
+
+def bytnums2str(bns,**kwargs):
+    '''
+        bns = [79, 96, 78, 236, 89, 125]
+        bytnums2str(bns)
+        bns = [79, 96, 78, 236, 89, 125]
+        bytnums2str(bns,style='js')
+        bns = [79, 96, 78, 236, 89, 125]
+        bytnums2str(bns,encode='utf_16_be')
+        bns = [92, 117, 52, 102, 54, 48, 92, 117, 52, 101, 101, 99, 92, 117, 53, 57, 55, 100]
+        bytnums2str(bns,style='py')
+        bns = [92, 117, 52, 102, 54, 48, 92, 117, 52, 101, 101, 99, 92, 117, 53, 57, 55, 100]
+        bytnums2str(bns,encode='raw_unicode_escape')
+        bns = [228, 189, 160, 228, 187, 172, 229, 165, 189]
+        bytnums2str(bns,encode='utf_8')
+    '''
+    bs = bytnums2strm(bns)
+    s = bytstrm2str(bs,**kwargs)
+    return(s)
+
+#str2us                  string-to-slashus
+def str2us(s,**kwargs):
+    '''
+        bs = b'O`N\xecY}\xd85\xdcR'
+        s = bs.decode('utf_16_be')
+        s
+        us = str2us(s,style='js')
+        us
+        slash_show(us,style='js')
+        bs = b'\\u4f60\\u4eec\\u597d\\U0001d452'
+        bs = b'\x5c\x75\x34\x66\x36\x30\x5c\x75\x34\x65\x65\x63\x5c\x75\x35\x39\x37\x64\x5c\x55\x30\x30\x30\x31\x64\x34\x35\x32'
+        bs
+        
+        #上面两种格式的bytes 定义是一样的，只是显示方式不同
+        #>>>bs = b'\x5c\x75\x34\x66\x36\x30\x5c\x75\x34\x65\x65\x63\x5c\x75\x35\x39\x37\x64\x5c\x55\x30\x30\x30\x31\x64\x34\x35\x32'
+        #>>> bs
+        #b'\\u4f60\\u4eec\\u597d\\U0001d452'
+        
+        s = bs.decode('raw_unicode_escape')
+        s
+        us = str2us(s,style='py')
+        us
+        slash_show(us,style='py')
+    '''
+    bs = str2bytstrm(s,**kwargs)
+    us = bytstrm2us(bs,**kwargs)
+    return(us)
+
+#us2str                  slashus-to-string
+def us2str(us,**kwargs):
+    ''' 
+        ####
+        # unicode 的字面显示方式\\u \\U 总是BE 的 ，与实际存储方式无关:
+            # >>> bs = '你'.encode('utf_16_le')
+            # >>> bytstrm2hex(bs)
+            # '\\x60\\x4f'
+            # >>> bs = '你'.encode('utf_16_be')
+            # >>> bytstrm2hex(bs)
+            # '\\x4f\\x60'
+            # >>>
+        ####
+        #py style
+        us = '\\u4f60\\u4eec\\u597d\\U0001d452'
+        s = us2str(us,style='py')
+        s
+        #js style
+        us = '\\u4f60\\u4eec\\u597d\\ud835\\udc52'
+        s = us2str(us,style='js')
+        s
+        ## by default ,is js style
+        s = us2str(us)
+        s
+    '''
+    if(us == ''):
+        return("")
+    else:
+        bs = us2bytstrm(us,**kwargs)
+        s = bytstrm2str(bs,**kwargs)
+        return(s)
+
+
+
+
 #byte-number                byte-number (number 0 -255)
 #char-number                char-number  (ord(ch))
 #str                        string
@@ -396,7 +506,7 @@ str2bytstrm = pack_str
 #bytstrm2us                 byte-stream-to-slashus
 #us2bytstrm                 slashus-to-byte-stream
 
-#@@@@@@@@@@@@@@@@@@@
+
 def slash_show(s,**kwargs):
     '''
         us = '\\x4f\\x60\\x59\\x7d\\x54\\x17'
@@ -458,7 +568,6 @@ def hex2bytstrm(hs,**kwargs):
     bs = elel.join(arr,b'')
     return(bs)
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 def strm2bytnums(bs,**kwargs):
     '''
         bs = b'O`Y}T\x17'
@@ -477,7 +586,7 @@ def bytnums2strm(bns,**kwargs):
     '''
     arr = elel.array_map(bns,chr)
     s = elel.join(arr,'')
-    bs = bytes(s,'utf_8')
+    bs = bytes(s,'latin-1')
     return(bs)
 
 def bytstrm2chnums(bs,**kwargs):
@@ -558,22 +667,79 @@ def chnums2bytstrm(cns,**kwargs):
 
 chnums2strm = chnums2bytstrm
 
-
 def bytstrm2us(bs,**kwargs):
     '''
+        bs = b'O`N\xecY}\xd85\xdcR'
+        bs.decode('utf_16_be')
+        us = bytstrm2us(bs,style='js')
+        us
+        slash_show(us,style='js')
+        bs = b'\\u4f60\\u4eec\\u597d\\U0001d452'
+        bs = b'\x5c\x75\x34\x66\x36\x30\x5c\x75\x34\x65\x65\x63\x5c\x75\x35\x39\x37\x64\x5c\x55\x30\x30\x30\x31\x64\x34\x35\x32'
+        bs
+        #上面两种格式的bytes 定义是一样的，只是显示方式不同
+        #>>>bs = b'\x5c\x75\x34\x66\x36\x30\x5c\x75\x34\x65\x65\x63\x5c\x75\x35\x39\x37\x64\x5c\x55\x30\x30\x30\x31\x64\x34\x35\x32'
+        #>>> bs
+        #b'\\u4f60\\u4eec\\u597d\\U0001d452'
+        bs.decode('raw_unicode_escape')
+        bns = list(bs)
+        bns
+        bytnums2hex(bns)
+        us = bytstrm2us(bs,style='py')
+        us
+        slash_show(us,style='py')
     '''
+    if('encode' in kwargs):
+        encode=kwargs['encode']
+    else:
+        if('style' in kwargs):
+            style = kwargs['style']
+        else:
+            style = 'js'
+        if(style == 'js'):
+            encode = 'utf_16_be'
+        elif(style == 'py'):
+            encode = 'raw_unicode_escape'
+        else:
+            encode = 'raw_unicode_escape'
+    src = bs.__str__()
+    cond1 = ('\\u' in src)
+    cond2 = ('\\U' in src)
+    cond = (cond1 | cond2)
+    if(cond):
+        us = src[2:-1]
+        us=us.replace('\\\\','\\')
+    else:
+        if('style' in kwargs):
+            style = kwargs['style']
+        else:
+            style = 'js'
+        if(style == 'js'):
+            cns = bytstrm2chnums(bs,**kwargs)
+            hs = chnums2hex(cns,slashx=False)
+            arr =  divide(hs,4)
+            def cond_func(ele):
+                return('\\u'+ele)
+            arr = elel.array_map(arr,cond_func)
+            us = elel.join(arr,'')
+        else:
+            bs = bs.decode(encode).encode('raw_unicode_escape')
+            src = bs.__str__()
+            us = src[2:-1]
+            us=us.replace('\\\\','\\')    
+    return(us)
 
 def us2bytstrm(us,**kwargs):
     ''' 
         ####
         # unicode 的字面显示方式\\u \\U 总是BE 的 ，与实际存储方式无关:
-            >>> bs = '你'.encode('utf_16_le')
-            >>> bytstrm2hex(bs)
-            '\\x60\\x4f'
-            >>> bs = '你'.encode('utf_16_be')
-            >>> bytstrm2hex(bs)
-            '\\x4f\\x60'
-            >>>
+            # >>> bs = '你'.encode('utf_16_le')
+            # >>> bytstrm2hex(bs)
+            # '\\x60\\x4f'
+            # >>> bs = '你'.encode('utf_16_be')
+            # >>> bytstrm2hex(bs)
+            # '\\x4f\\x60'
+            # >>>
         ####
         #py style
         us = '\\u4f60\\u4eec\\u597d\\U0001d452'
@@ -611,6 +777,10 @@ def us2bytstrm(us,**kwargs):
             encode = 'raw_unicode_escape'
         else:
             encode = 'raw_unicode_escape'
+    if('style' in kwargs):
+        style = kwargs['style']
+    else:
+        style = 'js'
     if(style == 'js'):
         us = str.lower(us)
         uarr = us.split('\\u')
@@ -626,30 +796,537 @@ def us2bytstrm(us,**kwargs):
     return(bs)
 
 
-#str2chnums               string-to-char-numbers
-#chnums2str               char-numbers-to-string
 
-def str2chnums(s,**kwargs):
-    '''
-        s = '你好吗'
-        cns = str2chnums(s)
-        cns
-    '''
-    arr = list(s)
-    cns = elel.array_map(arr,ord)
-    return(cns)
+#hex 
 
-def chnums2str(cns,**kwargs):
+#bytnums2hex              byte-numbers-in-hex
+#hex2bytnums              hex-to-byte-numbers
+def bytnums2hex(bns,**kwargs):
+    '''
+        bns = [92, 117, 52, 102, 54, 48, 92, 117, 52, 101, 101, 99, 92, 117, 53, 57, 55, 100, 92, 85, 48, 48, 48, 49, 100, 52, 53, 50]
+        bytnums2hex(bns)
+        
+        bs = b'\\u4f60\\u4eec\\u597d\\U0001d452'
+        bs.__len__()
+        list(bs)
+        #bytes  取下标 会被隐式转换
+        bs[0]
+        type(bs[0])
+        bs[1]
+        #...
+        bs[27]
+        
+        bytnums2hex(bns,slashx=False)
+        
+    '''
+    if('slashx' in kwargs):
+        slashx = kwargs['slashx']
+    else:
+        slashx = True
+    arr = elel.array_map(bns,hex)
+    hs = elel.join(arr,'')
+    hs = str.lower(hs)
+    if(slashx == True):
+        hs = hs.replace('0x','\\x')
+    else:
+        hs = hs.replace('0x','')
+    return(hs)
+
+def hex2bytnums(hs,**kwargs):
+    '''
+        hs = '\\x5c\\x75\\x34\\x66\\x36\\x30\\x5c\\x75\\x34\\x65\\x65\\x63\\x5c\\x75\\x35\\x39\\x37\\x64\\x5c\\x55\\x30\\x30\\x30\\x31\\x64\\x34\\x35\\x32'
+        hex2bytnums(hs)
+        hs = '5c75346636305c75346565635c75353937645c553030303164343532'
+        hex2bytnums(hs)
+    '''
+    hs = str.lower(hs)
+    hs = hs.replace('\\x','')
+    arr = divide(hs,2)
+    def cond_func(ele):
+        ele='0x'+ele
+        ele = int(ele,16)
+        return(ele)
+    arr = elel.array_map(arr,cond_func)    
+    return(arr)
+
+
+#chnums2hex               char-numbers-in-hex
+#hex2chnums               hex-to-char-numbers
+
+def chnums2hex(cns,**kwargs):
+    '''
+        cns = [20320, 20204, 22909, 119890]
+        chnums2hex(cns)
+        chnums2hex(cns,slashx=False)
+        chnums2hex(cns,style='js')
+        chnums2hex(cns,style='py')
+        chnums2hex(cns,encode='raw_unicode_escape')
+        chnums2hex(cns,encode='utf_8')
+    '''
+    if('encode' in kwargs):
+        encode=kwargs['encode']
+    else:
+        if('style' in kwargs):
+            style = kwargs['style']
+        else:
+            style = 'js'
+        if(style == 'js'):
+            encode = 'utf_16_be'
+        elif(style == 'py'):
+            encode = 'raw_unicode_escape'
+        else:
+            encode = 'raw_unicode_escape'
+    if('slashx' in kwargs):
+        slashx = kwargs['slashx']
+    else:
+        slashx = True
+    hs = bytstrm2hex(chnums2bytstrm(cns,**kwargs),slashx=slashx)
+    return(hs)
+
+def hex2chnums(hs,**kwargs):
+    '''
+        hs = '\\x4f\\x60\\x4e\\xec\\x59\\x7d\\xd8\\x35\\xdc\\x52'
+        chnums = hex2chnums(hs)
+        chnums
+        hs = '4f604eec597dd835dc52'
+        chnums = hex2chnums(hs)
+        chnums
+        hs = '\\x4f\\x60\\x4e\\xec\\x59\\x7d\\xd8\\x35\\xdc\\x52'
+        chnums = hex2chnums(hs,style='js')
+        chnums
+        hs = '\\x5c\\x75\\x34\\x66\\x36\\x30\\x5c\\x75\\x34\\x65\\x65\\x63\\x5c\\x75\\x35\\x39\\x37\\x64\\x5c\\x55\\x30\\x30\\x30\\x31\\x64\\x34\\x35\\x32'
+        chnums = hex2chnums(hs,style='py')
+        chnums
+        hs = '\\x5c\\x75\\x34\\x66\\x36\\x30\\x5c\\x75\\x34\\x65\\x65\\x63\\x5c\\x75\\x35\\x39\\x37\\x64\\x5c\\x55\\x30\\x30\\x30\\x31\\x64\\x34\\x35\\x32'
+        chnums = hex2chnums(hs,encode='raw_unicode_escape')
+        chnums
+        hs = '\\xe4\\xbd\\xa0\\xe4\\xbb\\xac\\xe5\\xa5\\xbd\\xf0\\x9d\\x91\\x92'
+        chnums = hex2chnums(hs,encode='utf_8')
+        chnums
+    '''
+    bs = hex2bytstrm(hs,**kwargs)
+    chnums = bytstrm2chnums(bs,**kwargs)
+    return(chnums)
+
+
+#hex2us                   hex-to-slashus
+#us2hex                   slashus-to-hex
+
+def hex2us(hs,**kwargs):
+    '''
+        hs = '4f604eec597dd835dc52'
+        us = hex2us(hs,style='js')
+        us
+        slash_show(us,style='js')
+        
+        hs = '\\x5c\\x75\\x34\\x66\\x36\\x30\\x5c\\x75\\x34\\x65\\x65\\x63\\x5c\\x75\\x35\\x39\\x37\\x64\\x5c\\x55\\x30\\x30\\x30\\x31\\x64\\x34\\x35\\x32'
+        us = hex2us(hs,style='py')
+        us
+        slash_show(us,style='py')
+        
+    '''
+    bs = hex2bytstrm(hs,**kwargs)
+    us = bytstrm2us(bs,**kwargs)
+    return(us)
+
+def us2hex(us,**kwargs):
+    '''
+        us = '\\u4f60\\u4eec\\u597d\\ud835\\udc52'
+        us2hex(us,style='js')
+        us = '\\u4f60\\u4eec\\u597d\\U0001d452'
+        us2hex(us,style='py')
+    '''
+    bs = us2bytstrm(us,**kwargs)
+    hs = bytstrm2hex(bs,**kwargs)
+    return(hs)
+
+
+#chnums2bytnums           char-numbers-to-byte-numbers
+#bytnums2chnums           byte-numbers-to-char-numbers
+
+
+def chnums2bytnums(cns,**kwargs):
     '''
         cns = [20320, 22909, 21527]
-        chnums2str(cns)
+        chnums2bytnums(cns)
+        
+        chnums2bytnums(cns,style='js')
+        chnums2bytnums(cns,encode='utf_16_be')
+        
+        
+        chnums2bytnums(cns,style='py')
+        chnums2bytnums(cns,encode='raw_unicode_escape')
+        
+        chnums2bytnums(cns,encode='utf_8')
     '''
-    arr = elel.array_map(cns,chr)
-    s = elel.join(arr,'')
+    bs = chnums2bytstrm(cns,**kwargs)
+    bns = strm2bytnums(bs,**kwargs)
+    return(bns)
+
+def bytnums2chnums(bns,**kwargs):
+    '''
+        bns = [79, 96, 89, 125, 84, 23]
+        bytnums2chnums(bns,style='js')
+        bns = [92, 117, 52, 102, 54, 48, 92, 117, 53, 57, 55, 100, 92, 117, 53, 52, 49, 55]
+        bytnums2chnums(bns,style='py')
+        bns = [228, 189, 160, 229, 165, 189, 229, 144, 151]
+        bytnums2chnums(bns,encode='utf_8')
+    '''
+    bs = bytnums2strm(bns,**kwargs)
+    cns = bytstrm2chnums(bs,**kwargs)
+    return(cns)
+
+#chnums2us                char-numbers-to-slashus
+#us2chnums                slashus-to-char-numbers
+
+def chnums2us(cns,**kwargs):
+    '''
+        cns = [20320, 22909, 21527,119890]
+        us = chnums2us(cns,style='js')
+        us
+        slash_show(us,style='js')
+        us = chnums2us(cns,style='py')
+        us
+        slash_show(us,style='py')
+    '''
+    bs = chnums2bytstrm(cns,**kwargs)
+    us = bytstrm2us(bs,**kwargs)
+    return(us)
+
+def us2chnums(us,**kwargs):
+    '''
+        us = '\\u4f60\\u597d\\u5417\\ud835\\udc52'
+        us2chnums(us,style='js')
+        us = '\\u4f60\\u597d\\u5417\\U0001d452'
+        us2chnums(us,style='py')
+        
+    '''
+    bs = us2bytstrm(us,**kwargs)
+    cns = bytstrm2chnums(bs,**kwargs)
+    return(cns)
+
+#bytnums2us               byte-numbers-to-slashus
+#us2bytnums               slashus-to-byte-numbers
+
+def bytnums2us(bns,**kwargs):
+    '''
+        bns = [79, 96, 89, 125, 84, 23, 216, 53, 220, 82]
+        us = bytnums2us(bns,style='js')
+        us 
+        slash_show(us,style='js')
+        bns = [92, 117, 52, 102, 54, 48, 92, 117, 53, 57, 55, 100, 92, 117, 53, 52, 49, 55, 92, 85, 48, 48, 48, 49, 100, 52, 53, 50]
+        us = bytnums2us(bns,style='py')
+        us 
+        slash_show(us,style='py')
+    '''
+    bs = bytnums2strm(bns,**kwargs)
+    us = bytstrm2us(bs,**kwargs)
+    return(us)
+
+
+def us2bytnums(us,**kwargs):
+    '''
+        us = '\\u4f60\\u597d\\u5417\\ud835\\udc52'
+        us2bytnums(us,style='js')
+        us = '\\u4f60\\u597d\\u5417\\U0001d452'
+        us2bytnums(us,style='py')
+        
+    '''
+    bs = us2bytstrm(us,**kwargs)
+    bns = strm2bytnums(bs,**kwargs)
+    return(bns)
+
+
+def str_code_points(s,**kwargs):
+    '''
+        bs = b'\xd85\xdcRO`N\xecY}\xd85\xdcR'
+        s = bs.decode('utf_16_be')
+        s
+        str_code_points(s,style='js')
+        bs[0:4]
+        bs[0:4].decode('utf_16_be')
+        bs[4:6]
+        bs[4:6].decode('utf_16_be')
+        bs[8:10]
+        bs[8:10].decode('utf_16_be')
+        bs[10:14]
+        bs[10:14].decode('utf_16_be')
+        #
+        bs = s.encode('utf_8')
+        str_code_points(s,encode='utf_8')
+        bs[0:4]
+        bs[0:4].decode('utf_8')
+        bs[4:7]
+        bs[4:7].decode('utf_8')
+        bs[7:10]
+        bs[7:10].decode('utf_8')
+        bs[10:13]
+        bs[10:13].decode('utf_8')
+        bs[13:17]
+        bs[13:17].decode('utf_8')
+    '''
+    if('encode' in kwargs):
+        encode=kwargs['encode']
+    else:
+        if('style' in kwargs):
+            style = kwargs['style']
+        else:
+            style = 'js'
+        if(style == 'js'):
+            encode = 'utf_16_be'
+        elif(style == 'py'):
+            encode = 'raw_unicode_escape'
+        else:
+            encode = 'raw_unicode_escape'
+    arr = list(s)
+    locs = [0]
+    cursur = 0
+    lngth = arr.__len__()
+    for i in range(0,lngth):
+        chbs = encode_chstr(arr[i],encode=encode)
+        offset = chbs.__len__()
+        cursur = cursur + offset
+        locs.append(cursur)
+    return(locs)
+
+#
+def str_jschar_points(s):
+    '''
+        bs = b'\xd85\xdcRO`N\xecY}\xd85\xdcR'
+        s = bs.decode('utf_16_be')    
+        s 
+        str2jscharr(s)
+    '''
+    locs = str_code_points(s,encode='utf_16_be')
+    locs = elel.array_map(locs,lambda ele:ele//2)
+    return(locs)
+
+def pychpoints2jscharpoints(s,pypoint):
+    '''
+        bs = b'\xd85\xdcRO`N\xecY}\xd85\xdcR'
+        s = bs.decode('utf_16_be')    
+        s 
+        str2jscharr(s)
+        pychpoints2jscharpoints(s,0)
+        pychpoints2jscharpoints(s,1)
+        pychpoints2jscharpoints(s,2)
+        pychpoints2jscharpoints(s,3)
+    '''
+    jslocs = str_jschar_points(s)
+    return(jslocs[pypoint])
+
+def jscharpoints2pychpoints(s,jspoint):
+    '''
+        bs = b'\xd85\xdcRO`N\xecY}\xd85\xdcR'
+        s = bs.decode('utf_16_be')    
+        s 
+        str2jscharr(s)
+        jscharpoints2pychpoints(s,0)
+        jscharpoints2pychpoints(s,2)
+        jscharpoints2pychpoints(s,3)
+        jscharpoints2pychpoints(s,4)
+        jscharpoints2pychpoints(s,5)
+        jscharpoints2pychpoints(s,7)
+    '''
+    jslocs = str_jschar_points(s)
+    return(jslocs.index(jspoint))
+
+
+def us2uarr(us,**kwargs):
+    '''
+        us = '\\u4f60\\u597d\\u5417\\ud835\\udc52'
+        us2uarr(us,mode='prefix')
+        us2uarr(us,mode='value')
+        us2uarr(us)
+        us = '\\u4f60\\u597d\\u5417\\U0001d452'
+        us2uarr(us,mode='prefix')
+        us2uarr(us,mode='value')
+        us2uarr(us)
+    '''
+    if('mode' in kwargs):
+        mode = kwargs['mode']
+    else:
+        mode = 'both'
+    regex = re.compile('(\\\\[u|U][0-9a-fA-F]+)')
+    m = regex.findall(us)
+    lngth = m.__len__()
+    prefixes = []
+    values = []
+    bothes = []
+    for i in range(0,lngth):    
+        pfix = m[i][:2]    
+        value = m[i][2:]    
+        prefixes.append(pfix)
+        values.append(value)
+        bothes.append((pfix,value))
+    if(mode == 'prefix'):
+        return(prefixes)
+    elif(mode == 'value'):
+        return(values)
+    else:
+        return(bothes)
+
+def uarr2us(*args):
+    '''
+        puarr = ['\\u', '\\u', '\\u', '\\U']
+        vuarr = ['4f60', '597d', '5417', '0001d452']
+        uarr2us(puarr,vuarr)
+        uarr = [('\\u', '4f60'), ('\\u', '597d'), ('\\u', '5417'), ('\\U', '0001d452')]
+        uarr2us(uarr)
+    '''
+    uarr = args[0]
+    lngth = list(uarr).__len__()
+    if(lngth<1):
+        return('')
+    else:
+        pass
+    if(type(uarr[0])==type((0,0))):
+        def cond_func(ele):
+            return(ele[0]+ele[1])
+        uarr = elel.array_map(uarr,cond_func)
+    else:
+        puarr = args[0]
+        vuarr = args[1]
+        def map_func(ele1,ele2):
+            return(ele1+ele2)
+        uarr = elel.array_map2(puarr,vuarr,map_func=map_func)
+    us = elel.join(uarr,'')
+    return(us)
+
+
+def uarr2jscharr(*args):
+    '''
+        uarr = ['4f60', '4eec', '597d', 'd835', 'dc52']
+        uarr2jscharr(uarr)
+    '''
+    uarr = args[0]
+    lngth = list(uarr).__len__()
+    if(lngth<1):
+        return([])
+    else:
+        pass
+    if(type(uarr[0])==type((0,0))):
+        def cond_func(ele):
+            return(ele[1])
+        uarr = elel.array_map(uarr,cond_func)
+    else:
+        pass
+    def cond_func(ele):
+        ele = '0x'+ele    
+        n = int(ele,16)    
+        return(chr(n))    
+    jscharr = elel.array_map(uarr,cond_func)
+    return(jscharr)
+
+def uarr2str(*uarrs,**kwargs):
+    '''
+        puarr = ['\\u', '\\u', '\\u', '\\U']
+        vuarr = ['4f60', '597d', '5417', '0001d452']    
+        uarr2str(puarr,vuarr,style='py')    
+        uarr = [('\\u', '4f60'), ('\\u', '597d'), ('\\u', '5417'), ('\\U', '0001d452')]    
+        uarr2str(uarr,style='py')    
+    '''
+    us = uarr2us(*uarrs)
+    s = us2str(us,**kwargs)
     return(s)
 
+def str2uarr(s,**kwargs):
+    '''
+        bs = b'\xd85\xdcRO`N\xecY}\xd85\xdcR'
+        s = bs.decode('utf_16_be')
+        s
+        str2uarr(s,mode='both')
+        str2uarr(s,mode='value')
+    '''
+    us = str2us(s,**kwargs)
+    uarr = us2uarr(us,**kwargs)
+    return(uarr)
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+def str2jscharr(s,**kwargs):
+    '''
+        bs = b'\xd85\xdcRO`N\xecY}\xd85\xdcR'
+        s = bs.decode('utf_16_be')
+        s
+        str2jscharr(s)
+    '''
+    uarr = str2uarr(s,mode='both')
+    jscharr = uarr2jscharr(uarr)
+    return(jscharr)
+
+
+#strlen                string-length
+
+def length(s,**kwargs):
+    '''
+        # in python , the string-length means  unicode-char-lngth 
+        # in javascript, the length means how-many 16-bit unit
+        # for example:
+        # run in js 
+        var p = '\ud835\udc52' 
+        p 
+        p.length 
+        p.codePointAt(0)    
+        p.codePointAt(0).toString(16)
+        p.charCodeAt(0).toString(16)
+        p.charCodeAt(1).toString(16)
+        '\ud835\udc52'
+        # codePointAt(0) similiar to  ord in python
+        
+        chr(119890)
+        ord(chr(119890))
+        hex(119890)
+        
+        length(chr(119890))
+        length(chr(119890),style='js')
+    '''
+    if('style' in kwargs):
+        style = kwargs['style']
+    else:
+        style = 'py'
+    if(style == 'py'):
+        lngth = s.__len__()
+    else:
+        bs = s.encode('utf_16_be')
+        q = bs.__len__() // 2
+        r = bs.__len__() % 2
+        if(r == 0):
+            lngth = q
+        else:
+            lngth = q + 1
+    return(lngth)
+
+def fromCharCode(*args,**kwargs):
+    '''
+        #by default, the style is 'js'
+        
+        fromCharCode(97,98,99)
+        fromCharCode(97,98,99,style='js')
+        fromCharCode(97,98,99,style='py')
+        
+        #in javascript , only keep the low 2 bytes
+        # String['fromCharCode'](270752) = String['fromCharCode'](0x421a0)
+        # 0x000421a0
+        # 0x    21a0 = 8608
+        # So:
+        # String['fromCharCode'](270752) = String['fromCharCode'](8608) = '?'
+        
+        fromCharCode(270752,style='js')
+        fromCharCode(270752,style='py')
+        fromCharCode(8608,style='js')
+        fromCharCode(8608,style='py')
+    '''
+    if('style' in kwargs):
+        style = kwargs['style']
+    else:
+        style = 'js'
+    rslt =''
+    if(style == 'py'):
+        for i in range(0,args.__len__()):
+            rslt = rslt + chr(args[i])
+    else:
+        for i in range(0,args.__len__()):
+            rslt = rslt + chr(0x0000ffff & args[i])
+    return(rslt)
 
 def fromCodePoint(*args,**kwargs):
     '''
@@ -682,142 +1359,157 @@ def fromCodePoint(*args,**kwargs):
     arr = elel.array_map(args,cond_func,encode,style)
     s = elel.join(arr,'')
     return(s)
-    
 
-
-
-###########
-
-
-def unpack_twobytes_using_unicode(two_bytes):
+def charAt(s,index=0,**kwargs):
     '''
-        >>> unpack_twobytes_using_unicode(b'\x00a')
-        'a'
-        >>> unpack_twobytes_using_unicode(b'\x95\xee')
-        '问'
-        >>> print('\u0061')
-        a
-        >>> print('\u95ee')
-        问
-        >>>
-    '''
-    h,l = struct.unpack('BB',two_bytes)
-    h = '{0:0>2}'.format(hex(h).lstrip('0x'))
-    l = '{0:0>2}'.format(hex(l).lstrip('0x'))
-    u = ''.join(('\\u',h,l))
-    u = bytes(u,'utf-8')
-    s = u.decode('raw_unicode_escape')
-    return(s)
-
-def unpack_fourbytes_using_unicode(four_bytes):
-    '''
-    '''
-    one,two,three,four = struct.unpack('BBBB',four_bytes)
-    one = '{0:0>2}'.format(hex(one).lstrip('0x'))
-    two = '{0:0>2}'.format(hex(two).lstrip('0x'))
-    three = '{0:0>2}'.format(hex(three).lstrip('0x'))
-    four = '{0:0>2}'.format(hex(four).lstrip('0x'))
-    u = ''.join(('\\U',one,two,three,four))
-    u = bytes(u,'utf-8')
-    s = u.decode('raw_unicode_escape')
-    return(s)
-
-def slash_u_str_to_char(slash_u_str):
-    '''
-        >>> slash_u_str_to_char('\\u4f60')
-        '你'
-        >>> slash_u_str_to_char('4f60')
-        '你'
-        >>>
-    '''
-    if(slash_u_str[:2]=='\\u'):
-        slash_u_str = slash_u_str[2:]
-        one = chr(int(slash_u_str[0:2],16))
-        two = chr(int(slash_u_str[2:],16))
-        pk = ''.join((one,two))
-        bs = bytes(pk,'latin-1')
-    elif(slash_u_str[:2]=='\\U'):
-        slash_u_str = slash_u_str[2:]
-        one = chr(int(slash_u_str[0:2],16))
-        two = chr(int(slash_u_str[2:4],16))
-        three = chr(int(slash_u_str[4:6],16))
-        four = chr(int(slash_u_str[6:8],16))
-        pk = ''.join((one,two,three,four))
-        bs = bytes(pk,'latin-1')
-    else:
-        if(slash_u_str.__len__() == 4):
-            one = chr(int(slash_u_str[0:2],16))
-            two = chr(int(slash_u_str[2:],16))
-            pk = ''.join((one,two))
-            bs = bytes(pk,'latin-1')
-        else:
-            one = chr(int(slash_u_str[0:2],16))
-            two = chr(int(slash_u_str[2:4],16))
-            three = chr(int(slash_u_str[4:6],16))
-            four = chr(int(slash_u_str[6:8],16))
-            pk = ''.join((one,two,three,four))
-            bs = bytes(pk,'latin-1')
-    if(bs.__len__() == 2):
-        return(unpack_twobytes_using_unicode(bs))
-    else:
-        return(unpack_fourbytes_using_unicode(bs))
-
-def unicode_num_to_char_str(unicode_num):
-    '''
-        >>> unicode_num_to_char_str(97)
-        'a'
-        >>> unicode_num_to_char_str(20320)
-        '你'
-        >>>
-        in javascript , only keep the low 2 bytes
-        String['fromCharCode'](270752) = String['fromCharCode'](0x421a0)
-        0x000421a0
-        0x    21a0 = 8608
-        So:
-        String['fromCharCode'](270752) = String['fromCharCode'](8608) = '?'
-    '''
-    h = hex(unicode_num)
-    h = h[2:]
-    if(h.__len__()<=4):
-        prepend = "0" * (4 - h.__len__())
-    else:
-        prepend = "0" * (8 - h.__len__())
-    h = ''.join((prepend,h))
-    ch = slash_u_str_to_char(h)
-    return(ch)
-
-def fromCharCode(*args,**kwargs):
-    '''
-        #by default, the style is 'js'
+        bs = b'O`N\xecY}\xd85\xdcR'
+        s = bs.decode('utf_16_be')
+        s
+        bytstrm2us(bs,style='js')
+        #refer to js ,js 不是按照char-length 算位置的，而是按照16-bit 
+        #s = '\u4f60\u4eec\u597d\ud835\udc52'
+        #"你们好??"
+        #s.charAt(0)
+        #"你"
+        #s.charAt(1)
+        #"们"
+        #s.charAt(2)
+        #"好"
+        #s.charAt(3)
+        #"\ud835"
+        #s.charAt(4)
+        #"\udc52"
+        #arr = Array.from(s)
+        #Array(4) [ "你", "们", "好", "??" ]
+        charAt(s,3)
+        charAt(s,3,style='py')
+        charAt(s,3,style='js')
+        charAt(s,4,style='js')
+        #by default ,index = 0
+        charAt(s)
         
-        fromCharCode(97,98,99)
-        fromCharCode(97,98,99,style='js')
-        fromCharCode(97,98,99,style='py')
-        
-        #in javascript , only keep the low 2 bytes
-        # String['fromCharCode'](270752) = String['fromCharCode'](0x421a0)
-        # 0x000421a0
-        # 0x    21a0 = 8608
-        # So:
-        # String['fromCharCode'](270752) = String['fromCharCode'](8608) = '?'
-        
-        fromCharCode(270752,style='js')
-        fromCharCode(270752,style='py')
-        fromCharCode(8608,style='js')
-        fromCharCode(8608,style='py')
     '''
     if('style' in kwargs):
         style = kwargs['style']
     else:
-        style = 'js'
-    rslt =''
+        style = 'py'
     if(style == 'py'):
-        for i in range(0,args.__len__()):
-            rslt = rslt + unicode_num_to_char_str(args[i])
+        ch = s[index]
     else:
-        for i in range(0,args.__len__()):
-            rslt = rslt + unicode_num_to_char_str(0x0000ffff & args[i])
-    return(rslt)
+        us = str2us(s,style='js')
+        uarr = us.split('\\u')
+        uarr.pop(0)
+        tmp = '0x' + uarr[index]
+        cn = int(tmp,16)
+        ch = chr(cn)
+    return(ch)
+
+def charCodeAt(s,index=0,**kwargs):
+    '''
+        bs = b'O`N\xecY}\xd85\xdcR'
+        s = bs.decode('utf_16_be')
+        s
+        bytstrm2us(bs,style='js')
+        #refer to js ,js 不是按照char-length 算位置的，而是按照16-bit 
+        #s = '\u4f60\u4eec\u597d\ud835\udc52'
+        #"你们好??"
+        #s.charCodeAt(0)
+        #20320
+        #s.charCodeAt(1)
+        #20204
+        #s.charCodeAt(2)
+        #22909
+        #s.charCodeAt(3)
+        #55349
+        #s.charCodeAt(4)
+        #56402
+        #arr = Array.from(s)
+        #Array(4) [ "你", "们", "好", "??" ]
+        charCodeAt(s,3)
+        charCodeAt(s,3,style='py')
+        charCodeAt(s,3,style='js')
+        charCodeAt(s,4,style='js')
+        #by default ,index = 0
+        charCodeAt(s)
+        
+    '''
+    if('style' in kwargs):
+        style = kwargs['style']
+    else:
+        style = 'py'
+    return(ord(charAt(s,index,**kwargs)))
+
+def codePointAt(s,index=0,**kwargs):
+    '''
+        bs = b'\xd85\xdcRO`N\xecY}\xd85\xdcR'
+        s = bs.decode('utf_16_be')
+        s
+        bytstrm2us(bs,style='js')
+        #refer to js ,js 不是按照char-length 算位置的，而是按照16-bit 
+        codePointAt(s,0,style='py')
+        codePointAt(s,1,style='py')
+        codePointAt(s,2,style='py')
+        codePointAt(s,3,style='py')
+        codePointAt(s,4,style='py')
+        #
+        codePointAt(s,0,style='js')
+        codePointAt(s,1,style='js')
+        codePointAt(s,2,style='js')
+        codePointAt(s,3,style='js')
+        codePointAt(s,4,style='js')
+        codePointAt(s,5,style='js')
+        codePointAt(s,6,style='js')
+        #by default ,index = 0
+        codePointAt(s)
+        
+    '''
+    if('style' in kwargs):
+        style = kwargs['style']
+    else:
+        style = 'py'
+    if(style == 'py'):
+        return(ord(charAt(s,index,**kwargs)))
+    else:
+        locs = str_code_points(s,encode='utf_16_be')
+        locs = elel.array_map(locs,lambda ele:ele//2)
+        uarr = str2uarr(s,**kwargs)
+        jscharr = uarr2jscharr(uarr)
+        if(index in locs):
+            return(ord(charAt(s,locs.index(index),style='py')))
+        else:
+            return(ord(jscharr[index]))
+
+###########
+
+
+# String.prototype.concat()
+# String.prototype.endsWith()
+# String.prototype.includes()
+# String.prototype.indexOf()
+# String.prototype.lastIndexOf()
+# String.prototype.localeCompare()
+# String.prototype.match()
+# String.prototype.normalize()
+# String.prototype.padEnd()
+# String.prototype.padStart()
+# String.prototype.repeat()
+# String.prototype.replace()
+# String.prototype.search()
+# String.prototype.split()
+# String.prototype.startsWith()
+# String.prototype.substr()
+# String.prototype.substring()
+# String.prototype.toLocaleLowerCase()
+# String.prototype.toLocaleUpperCase()
+# String.prototype.toLowerCase()
+# String.prototype.toSource()
+# String.prototype.toString()
+# String.prototype.toUpperCase()
+# String.prototype.trim()
+# String.prototype.trimLeft()
+# String.prototype.trimRight()
+# String.prototype.valueOf()
+
 
 #@@@@@@@@@@@@@@@@@@
 
@@ -843,37 +1535,7 @@ def fromCharCode(*args,**kwargs):
 
 
 
-# def char_to_slash_u_str(ch,**kwargs):
-    # '''
-        # >>> char_to_slash_u_str('a')
-        # '\\u0061'
-        # >>> char_to_slash_u_str('你')
-        # '\\u4f60'
-    # '''
-    # if('with_slash_u' in kwargs):
-        # with_slash_u=kwargs['with_slash_u']
-    # else:
-        # with_slash_u=1
-    # if('encode' in kwargs):
-        # encode=kwargs['encode']
-    # else:
-        # encode='raw_unicode_escape'
-    # if(ord(ch)<256):
-        # bs = hex(ord(ch)).replace('0x','\\u00')
-        # if(with_slash_u):
-            # return(bs)
-        # else:
-            # return(bs[2:])
-    # else:
-        # bs = ch.encode(encode)
-        # if(encode == 'raw_unicode_escape'):
-            # if(with_slash_u):
-                # return(bs.__str__()[3:-1])
-            # else:
-                # return(bs.__str__()[5:-1])
-        # elif(encode == 'utf-8'):
-        # elif(encode == 'utf-16'):
-        # else:
+
 
     
 
@@ -886,8 +1548,6 @@ def fromCharCode(*args,**kwargs):
 # empty seperator support 
 
 
-
-
 def divide(s,interval):
     '''
         s = 'abcdefghi'
@@ -898,10 +1558,61 @@ def divide(s,interval):
     arr = elel.divide(s,interval)
     return(arr)
 
-
-
-
-
+def slice(s,si,ei=None,**kwargs):
+    '''
+        # in python , the string-length means  unicode-char-lngth 
+        # in javascript, the length means how-many 16-bit unit
+        # for example:
+        # run in js 
+        bs = b'\xd85\xdcRO`N\xecY}\xd85\xdcR'
+        s = bs.decode('utf_16_be')        
+        s        
+        bytstrm2us(bs,style='js')
+        slice(s,0,1,style='py')
+        slice(s,0,2,style='py')
+        slice(s,0,3,style='py')
+        slice(s,0,4,style='py')
+        #
+        slice(s,0,1,style='js')
+        slice(s,0,2,style='js')
+        slice(s,0,3,style='js')
+        slice(s,0,4,style='js')
+        slice(s,0,5,style='js')
+        slice(s,0,6,style='js')
+        slice(s,0,7,style='js')
+    '''
+    lngth = length(s,**kwargs)
+    if('style' in kwargs):
+        style = kwargs['style']
+    else:
+        style = 'py'
+    if(ei == None):
+        ei = lngth
+    else:
+        pass
+    si = elel.uniform_index(si,lngth)
+    ei = elel.uniform_index(ei,lngth)
+    if(style == 'py'):
+        part = s[si:ei]
+        return(part)
+    else:
+        locs = str_code_points(s,encode='utf_16_be')
+        locs = elel.array_map(locs,lambda ele:ele//2)
+        us = str2us(s,encode = 'utf_16_be')
+        uarr = us2uarr(us,mode='both')
+        jscharr = uarr2jscharr(uarr)
+        slb = elel.lower_bound(locs,si)
+        sub = elel.upper_bound(locs,si)
+        elb = elel.lower_bound(locs,ei)
+        eub = elel.upper_bound(locs,ei)
+        part1 = jscharr[si:sub]
+        s1 = elel.join(part1,'')
+        part2 = uarr[sub:elb]
+        s2 = uarr2str(part2,style='js')
+        part3 = jscharr[elb:ei]
+        s3 = elel.join(part3,'')
+        s = s1 + s2 + s3
+        return(s)
 
 
 # def str_indexes(s,c):
@@ -938,80 +1649,5 @@ def divide(s,interval):
 # def parseInt(nstr,radix=10,**kwargs):
 
 
-
-# def unpack_twobytes_using_unicode(two_bytes):
-# def unpack_fourbytes_using_unicode(four_bytes):
-# def pack_str_using_unicode(str):
-# def unpack_bytes_stream_using_unicode(Bs):
-# def char_str_to_unicode_num(char_str):
-# def unicode_num_to_char_str(unicode_num):
-# def str_to_unicode_num_array(a_string):
-# def unicode_num_array_to_str(num_arr):
-
-
-# def str_to_unicode_hex_str(s):
-# def unicode_hex_str_to_str(s):
-
-
-
-
-
-
-
-
-
-
-
-###############################
-# def pack_char_using_unicode(char_str):
-# def pack_char_using_unicode(char_str):
-    # '''
-        # >>> print('a')
-        # a
-        # >>> print(ord('a'))
-        # 97
-        # >>> print(hex(97))
-        # 0x61
-        # >>> '\x00'
-        # '\x00'
-        # >>> print('\x61')
-        # a
-        # >>> print('\u0061')
-        # a
-        # >>> pack_char_using_unicode('a')
-        # b'\x00a'
-        # >>>
-        # >>>
-        # >>>
-        # >>> print('问')
-        # 问
-        # >>> print(ord('问'))
-        # 38382
-        # >>> print(hex(38382))
-        # 0x95ee
-        # >>> print('\x95')
-        # <95>
-        # >>> print('\xee')
-        # ?
-        # >>> print('\u95ee')
-        # 问
-        # >>> pack_char_using_unicode('问')
-        # b'\x95\xee'
-        # >>>
-    # '''
-    # if('encode' in kwargs):
-        # encode=kwargs['encode']
-    # else:
-        # encode='raw_unicode_escape'
-    # u = char_str.encode(encode)
-    # u = u.decode('utf-8')
-    # if(u.__len__() == 1):
-        # u = b'\x00' + bytes(u,'latin-1')
-    # else:
-        # u = u[2:]
-        # uh = int(u[0:2],16)
-        # ul = int(u[2:],16)
-        # u = bytes((chr(uh)+chr(ul)),'latin-1')
-    # return(u)
 
 
