@@ -20,15 +20,15 @@ In Progressing.......
 ├──5. [codePointAt\<1\>](estring/Images/codePointAt.0.png)  <br>
 ├──5. [codePointAt\<2\>](estring/Images/codePointAt.1.png)  <br>
 
-
+├──19. [slice\<0\>](estring/Images/slice.0.png)  <br>
+├──19. [slice\<1\>](estring/Images/slice.1.png)  <br>
 -----------------------------------------------------------------------
 
 
 ## supplementary APIs
 -----------------------------------------------------------------------
 >├──0. [divide](estring/Images/divide.0.png)  <br>
-├──1. [slice](estring/Images/slice.0.png)  <br>
-├──2. [slice](estring/Images/slice.1.png)  <br>
+
 -----------------------------------------------------------------------
 
 
