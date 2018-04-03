@@ -25,8 +25,16 @@ In Progressing.......
 ├──9. [indexOf](estring/Images/indexOf.0.png)  <br>
 ├──10. [padEnd](estring/Images/padEnd.0.png)  <br>
 ├──11. [padStart](estring/Images/padStart.0.png)  <br>
+├──12. [repeat](estring/Images/repeat.0.png)  <br>
+├──13. [replace](estring/Images/replace.0.png)  <br>
+├──13. [replace](estring/Images/replace.1.png)  <br>
+├──13. [replace](estring/Images/replace.2.png)  <br>
+├──13. [replace](estring/Images/replace.3.png)  <br>
+├──. [](estring/Images/.0.png)  <br>
+
 ├──19. [slice\<0\>](estring/Images/slice.0.png)  <br>
 ├──19. [slice\<1\>](estring/Images/slice.1.png)  <br>
+
 -----------------------------------------------------------------------
 
 
