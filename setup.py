@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 setup(
       name="estring",
       version = "0.1",
-      description="string APIs",
+      description="javascript style string APIs",
       author="dapeli",
       url="https://github.com/ihgazni2/estring",
       author_email='terryinzaghi@163.com', 

@@ -1883,71 +1883,160 @@ def slice(s,si,ei=None,**kwargs):
         return(s)
 
 
+#@@@
+def split(s,sp="",limit=None):
+    '''
+        regex=re.compile("[0-9]+")
+        s = 'A111B222CC33D4EEE56789F000A'
+        split(s,regex)
+        
+        regex=re.compile("[0-9]+")
+        s = '000A111B222CC33D4EEE56789F000'
+        split(s,regex)
+        
+        
+        s = '111A111B111CC111D111'
+        split(s,'111')
 
+        s = 'A111B111CC111D'
+        split(s,'111')
+        
+        
+        s = 'ABCD'
+        split(s)
+    '''
+    t1 = type(sp)
+    tr = type(re.compile(""))
+    cond1 = (t1 == tr)
+    if(cond1):
+        regex = sp
+    else:
+        regex = re.compile(re.escape(sp))
+    it = regex.finditer(s)
+    spans = []
+    for m in it:
+        spans.append(m.span())
+    reserved = elel.rangize_supplement(spans,s.__len__())
+    def cond_func(ele,s):
+        return(slice(s,*ele))
+    arr = elel.array_map(reserved,cond_func,s)
+    if(spans[0][0] == 0):
+        arr = elel.prepend(arr,'')
+    else:
+        pass
+    if((sp == '')|(sp == re.compile(""))):
+        arr.pop(0)
+        arr.pop(-1)
+    else:
+        pass
+    if(limit == None):
+        return(arr)
+    else:
+        return(arr[:limit])
 
+def startsWith(s,prefix,start=0,end=None):
+    '''
+    '''
+    if(start == None):
+        start = s.__len__()
+    else:
+        pass
+    return(str.startswith(s,prefix,start,end))
 
+def substr(s,start,lngth=None,**kwargs):
+    if(lngth==None):
+        lngth = s.__len__()
+    else:
+        pass
+    return(slice(s,start,start+lngth,**kwargs))
 
+def substring(s,si,ei=None,**kwargs):
+    '''
+        # refer to https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/substring
+        # substring 提取从 indexStart 到 indexEnd（不包括）之间的字符。特别地：
+        
+        # 如果 indexStart 等于 indexEnd，substring 返回一个空字符串。
+        # 如果省略 indexEnd，substring 提取字符一直到字符串末尾。
+        # 如果任一参数小于 0 或为 NaN，则被当作 0。
+        # 如果任一参数大于 stringName.length，则被当作 stringName.length。
+        # 如果 indexStart 大于 indexEnd，则 substring 的执行效果就像两个参数调换了一样。
+        # 例如，str.substring(1, 0) == str.substring(0, 1)。
+        # Special !!!, different behavior from slice when si > ei 
+        s = "abcde"
+        substring(s,1,3)
+        substring(s,3,1)
+        
+    '''
+    if(ei == None):
+        ei = s.__len__()
+    else:
+        pass
+    si = elel.uniform_index(si,s.__len__())
+    ei = elel.uniform_index(ei,s.__len__())
+    if(si>ei):
+        return(slice(s,ei,si,**kwargs))
+    else:
+        return(slice(s,si,ei,**kwargs))
 
+def toLowerCase(s,**kwargs):
+    return(str.lower(s))
 
+def toUpperCase(s,**kwargs):
+    return(str.upper(s))
+
+# not implemented yet
 # String.prototype.localeCompare()
 # String.prototype.match()
 # String.prototype.normalize()
-
-
-
 # String.prototype.search()
-# String.prototype.split()
-# String.prototype.startsWith()
-# String.prototype.substr()
-# String.prototype.substring()
-# String.prototype.toLocaleLowerCase()
-# String.prototype.toLocaleUpperCase()
-# String.prototype.toLowerCase()
 # String.prototype.toSource()
 # String.prototype.toString()
-# String.prototype.toUpperCase()
-# String.prototype.trim()
-# String.prototype.trimLeft()
-# String.prototype.trimRight()
+# String.prototype.toLocaleLowerCase()
+# String.prototype.toLocaleUpperCase()
 # String.prototype.valueOf()
 
+def trim(s,**kwargs):
+    '''
+        s = '    \r\n\t\t@ABC@\t\t\t'
+        trim(s)
+        s = '    \r\n\t\t@ABC@\t\t\t'
+        trim(s,spaces='\r\n\t@ ')
+    '''
+    if('spaces' in kwargs):
+        spaces = kwargs['spaces']
+    else:
+        spaces = '\r\n\t\x20'
+    s = s.strip(spaces)
+    return(s)
 
-#@@@@@@@@@@@@@@@@@@
+def trimLeft(s,**kwargs):
+    '''
+        s = '    \r\n\t\t@ABC@\t\t\t'
+        trimLeft(s)
+        trimLeft(s,spaces='\r\n\t@ ')
+    '''
+    if('spaces' in kwargs):
+        spaces = kwargs['spaces']
+    else:
+        spaces = '\r\n\t\x20'
+    s = s.lstrip(spaces)
+    return(s)
 
-
-
-
-
-
+def trimRight(s,**kwargs):
+    '''
+        s = '    \r\n\t\t@ABC@\t\t\t'
+        trimRight(s)
+        trimRight(s,spaces='\r\n\t@ ')
+    '''
+    if('spaces' in kwargs):
+        spaces = kwargs['spaces']
+    else:
+        spaces = '\r\n\t\x20'
+    s = s.rstrip(spaces)
+    return(s)
 
 
 #############################
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-#str.split([separator[, limit]])
-# str.split(sep=None, maxsplit=-1)
-# >>> '1 2 3'.split(maxsplit=1)
-# ['1', '2 3']
-# seperator 支持正则
-# empty seperator support 
-
 
 def divide(s,interval):
     '''
@@ -1972,26 +2061,315 @@ def indexesAll(s,c):
             pass
     return(rslt)
 
+def strip(s,chars,count=None,**kwargs):
+    '''
+        strip("ABABAAAxyzABB","AB")
+        strip("ABABAAAxyzABB","AB",2)
+        
+        strip("ABABAAAxyzABB","AB",mode='whole')
+        strip("ABABAAAxyzABB","AB",1,mode='whole')
+        strip("ABABAAAxyzABB","AB",2,mode='whole')
+    '''
+    s = lstrip(s,chars,count,**kwargs)
+    s = rstrip(s,chars,count,**kwargs)
+    return(s)
 
-# def str_xor_str(s1,s2):
-# def str_to_bool(s,**kwargs):
-# def str_lstrip(s,char,count):
-# def str_rstrip(s,char,count):
-# def str_prepend(s,char,n):
-# def str_append(s,char,n):
-# def str_at_begin_of_str(str1,str2):
-# def str_at_end_of_str(str1,str2):
-# def str_display_width(s):
-# def str_prepend_basedon_displaywidth(s,width,**kwargs):
-# def str_append_basedon_displaywidth(s,width,**kwargs):
-# def str_tail_to_head(s, tail_len,**kwargs):
-# def str_head_to_tail(s, head_len,**kwargs):
+def lstrip(s,chars,count=None,**kwargs):
+    '''
+        lstrip('sssa','s',0)
+        lstrip('sssa','s',1)
+        lstrip('sssa','s',2)
+        lstrip('sssa','s',3)
+        lstrip('sssa','s',4)
+
+        lstrip('sbsa','sb',0)
+        lstrip('sbsa','sb',1)
+        lstrip('sbsa','sb',2)
+        lstrip('sbsa','sb',3)
+        lstrip('sbsa','sb',4)
+        
+        lstrip('sbsa','sb',0, mode='whole')
+        lstrip('sbsbsa','sb',1, mode='whole')
+        lstrip('sbsbsa','sb',2, mode='whole')
+        
+    '''
+    if(count==None):
+        count = s.__len__()
+    else:
+        pass
+    if('mode' in kwargs):
+        mode = kwargs['mode']
+    else:
+        mode = 'or'
+    if(mode == 'or'):
+        c = 0
+        for i in range(0,s.__len__()):
+            if(c==count):
+                break
+            else:
+                if(s[i] in chars):
+                    c = c+1
+                else:
+                    break
+        if(c==0):
+            return(s)
+        else:
+            return(s[c:])
+    else:
+        step = chars.__len__()
+        lngth = s.__len__()
+        c = 0
+        for i in range(0,lngth,step):
+            ele = s[i:i+step]
+            cond = (ele == chars)
+            if(cond):
+                if(c == count):
+                    break
+                else:
+                    c = c + 1
+            else:
+                break
+        if(c == 0):
+            return(s)
+        else:
+            return(s[i:])
+
+def rstrip(s,chars,count=None,**kwargs):
+    '''
+        rstrip('asss','s',0)
+        rstrip('asss','s',1)
+        rstrip('asss','s',2)
+        rstrip('asss','s',3)
+        rstrip('asss','s',4)
+        
+        rstrip('abbs','sb',0)
+        rstrip('abbs','sb',1)
+        rstrip('abbs','sb',2)
+        rstrip('abbs','sb',3)
+        rstrip('abbs','sb',4)
+        
+        rstrip('asbsbsb','sb',0,mode='whole')
+        rstrip('asbsbsb','sb',1,mode='whole')
+        rstrip('asbsbsb','sb',2,mode='whole')
+        rstrip('asbsbsb','sb',3,mode='whole')
+        rstrip('asbsbsb','sb',4,mode='whole')
+    '''
+    if(count==None):
+        count = s.__len__()
+    else:
+        pass
+    if('mode' in kwargs):
+        mode = kwargs['mode']
+    else:
+        mode = 'or'
+    if(mode == 'or'):
+        c = 0
+        for i in range(s.__len__()-1,-1,-1):
+            if(c==count):
+                break
+            else:
+                if(s[i] in chars):
+                    c = c+1
+                else:
+                    break
+        if(c==0):
+            return(s)
+        else:
+            ei = s.__len__() - c
+            return(s[:ei])
+    else:
+        step = chars.__len__()
+        lngth = s.__len__()
+        c = 0
+        for i in range(lngth-1,-1,-step):
+            ele = s[i-step+1:i+1]
+            cond = (ele == chars)
+            if(cond):
+                if(c == count):
+                    break
+                else:
+                    c = c + 1
+            else:
+                break
+        if(c == 0):
+            return(s)
+        else:
+            return(s[:i+1])
+
+def reverse(s):
+    '''
+        s = 'ABCD'
+        reverse(s)
+    '''
+    arr = list(s)
+    arr = elel.reverse(arr)
+    s = elel.join(arr,'')
+    return(s)
+
+def prepend(s1,s2,count=1):
+    '''
+        prepend('ABCD','abcd',2)
+    '''
+    return(s2*count+s1)
+
+def append(s1,s2,count=1):
+    '''
+        append('ABCD','abcd',2)
+    '''
+    return(s1+s2*count)
+
+def xor(s1,s2):
+    '''
+    '''
+    S = ""
+    for I in range(0,s1.__len__()):
+        S += chr(ord(s1[I]) ^ ord(s2[I]));
+    return(S)
+
+def tail2head(s, tail_len,**kwargs):
+    '''
+        tail2head("abcdefghi",0)
+        tail2head("abcdefghi",1)
+        tail2head("abcdefghi",2)
+        tail2head("abcdefghi",3)
+        tail2head("abcdefghi",4)
+        tail2head("abcdefghi",5)
+        tail2head("abcdefghi",6)
+        tail2head("abcdefghi",7)
+        tail2head("abcdefghi",8)
+        tail2head("abcdefghi",9)
+        tail2head("abcdefghi",10)
+        tail2head("abcdefghi",10,repeat=False)
+        tail2head("abcdefghi",11,repeat=False,padding=' ')
+        tail2head("abcdefghi",12,repeat=False,padding='@')
+        tail2head("abcdefghi",10,repeat=True)
+        tail2head("abcdefghi",11,repeat=True)
+        tail2head("abcdefghi",12,repeat=True)
+    '''
+    if("repeat" in kwargs):
+        repeat = kwargs['repeat']
+    else:
+        repeat = True
+    if("padding" in kwargs):
+        padding = kwargs['padding']
+    else:
+        padding = '\x00'
+    I = ""
+    if(repeat):
+        for J in range(0,s.__len__()):
+            seq = (J + s.__len__() - tail_len) % s.__len__()
+            I = I + s[seq]
+    else:
+        for J in range(0,s.__len__()):
+            seq = (J + s.__len__() - tail_len)
+            if(seq < 0):
+                I = I + padding
+            else:
+                seq = seq % s.__len__()
+                I = I + s[seq]
+    return(I)
+
+end2begin = tail2head
+
+def head2tail(s, head_len,**kwargs):
+    '''
+        head2tail("abcdefghi",0)
+        head2tail("abcdefghi",1)
+        head2tail("abcdefghi",2)
+        head2tail("abcdefghi",3)
+        head2tail("abcdefghi",4)
+        head2tail("abcdefghi",5)
+        head2tail("abcdefghi",6)
+        head2tail("abcdefghi",7)
+        head2tail("abcdefghi",8)
+        head2tail("abcdefghi",9)
+        head2tail("abcdefghi",10)
+        head2tail("abcdefghi",10,repeat=False)
+        head2tail("abcdefghi",11,repeat=False,padding=' ')
+        head2tail("abcdefghi",12,repeat=False,padding='@')
+        head2tail("abcdefghi",10,repeat=True)
+        head2tail("abcdefghi",11,repeat=True)
+        head2tail("abcdefghi",12,repeat=True)
+    '''
+    if("repeat" in kwargs):
+        repeat = kwargs['repeat']
+    else:
+        repeat = 1
+    if("padding" in kwargs):
+        padding = kwargs['padding']
+    else:
+        padding = '\x00'
+    rslt =tail2head(s, s.__len__() - head_len,repeat=repeat,padding=padding)
+    if(repeat):
+        pass
+    else:
+        if(s.__len__() < head_len):
+            r = head_len % s.__len__()
+            rslt = rslt[:s.__len__()-r] + padding * r
+        else:
+            pass
+    return(rslt)
+
+begin2end = head2tail
+
+def display_width(s):
+    '''
+        display_width('a')
+        display_width('去')
+    '''
+    s= str(s)
+    width = 0
+    len = s.__len__()
+    for i in range(0,len):
+        sublen = s[i].encode().__len__()
+        sublen = int(sublen/2 + 1/2)
+        width = width + sublen
+    return(width)
+
+def prepend_basedon_displaywidth(s,width,**kwargs):
+    '''
+        prepend_basedon_displaywidth('a',4,padding='x')
+        prepend_basedon_displaywidth('去',4,padding='x')
+    '''
+    if('padding' in kwargs):
+        padding = kwargs['padding']
+    else:
+        padding = ' '
+    s = str(s)
+    w = display_width(s)
+    space_Len = width - w
+    new_S = ''
+    for i in range(0,space_Len):
+        new_S = ''.join((padding, new_S))
+    new_S = ''.join((new_S,s))
+    return(new_S)
+
+def append_basedon_displaywidth(s,width,**kwargs):
+    '''
+        append_basedon_displaywidth('a',4,padding='x')
+        append_basedon_displaywidth('去',4,padding='x')
+    '''
+    if('padding' in kwargs):
+        padding = kwargs['padding']
+    else:
+        padding = ' '
+    s = str(s)
+    w = display_width(s)
+    space_Len = width - w
+    new_S = padding * space_Len
+    new_S = ''.join((new_S,s))
+    return(new_S)
 
 
+##C C++ std::string APIs
 
+##lisp APIs
 
+##C#   APIs
 
+##perl APIs
 
+##other languages.....
 
 
 
