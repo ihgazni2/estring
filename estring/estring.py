@@ -1,6 +1,7 @@
 import struct
 import elist.elist as elel
 import re
+import copy
 
 
 #LE           Little- Endian
@@ -1479,21 +1480,421 @@ def codePointAt(s,index=0,**kwargs):
         else:
             return(ord(jscharr[index]))
 
-###########
+def concat(*args,**kwargs):
+    '''
+        concat('abc','efg','sss')
+    '''
+    args = list(args)
+    def callback(acc,curr):
+        acc = acc+curr
+        return(acc)
+    s = elel.reduce_left(args,callback,"")
+    return(s)
+
+def endsWith(s,suffix,end=None,start=0):
+    '''
+        s = "To be, or not to be, that is the question."
+        endsWith(s,"question.")
+        endsWith(s,"to be")
+        s[:19]
+        endsWith(s,"to be",19)
+        s[:5]
+        endsWith(s,"to be",5)
+    '''
+    if(end == None):
+        end = s.__len__()
+    else:
+        pass
+    return(str.endswith(s,suffix,start,end))
+
+def includes(s1,s2,start=0):
+    '''
+    '''
+    cond = (s2 in s1[start:])
+    return(cond)
+
+def indexOf(s,value,fromIndex=0,end=None):
+    '''
+    '''
+    if(end == None):
+        end = s.__len__()
+    else:
+        pass
+    return(s[fromIndex:end].index(value))
+
+def lastIndexOf(s,value,fromIndex=0,end=None):
+    '''
+        lastIndexOf("acccfad","a")
+    '''
+    if(end == None):
+        end = s.__len__()
+    else:
+        pass
+    return(elel.lastIndexOf(s[fromIndex:end],value))
+
+def padEnd(s1,targetLength,s2="\x20"):
+    '''
+        padEnd('abc',10)
+        padEnd('abc',10,'foo')
+        padEnd('abc',6,'123456')
+        padEnd('abc',1)
+    '''
+    s1lngth = s1.__len__()
+    s2lngth = s2.__len__()
+    rpts = (targetLength - s1lngth)// s2lngth + 1
+    s = s1 + s2 * rpts
+    if(targetLength>=s1lngth):
+        s = s[:targetLength]
+    else:
+        s = s1
+    return(s)
+
+def padStart(s1,targetLength,s2="\x20"):
+    '''
+        padStart('abc',10)
+        padStart('abc',10,'foo')
+        padStart('abc',6,'123456')
+        padStart('abc',1)
+    '''
+    s1lngth = s1.__len__()
+    s2lngth = s2.__len__()
+    rpts = (targetLength - s1lngth)// s2lngth + 1
+    s = s2 * rpts + s1
+    if(targetLength>=s1lngth):
+        s = s[:targetLength]
+    else:
+        s = s1
+    return(s)
+
+#@@@@
+def repeat(s,times):
+    return(s*times)
+
+def replace_newsub_parser(params):
+    '''
+        params = 'abc$$ef$&oo'
+        desc_arr = replace_newsub_parser(params)
+        pobj(desc)
+        params = 'abc$$ef$&$2'
+        desc_arr = replace_newsub_parser(params)
+        pobj(desc_arr)
+    '''
+    s = params
+    lngth = s.__len__()
+    rslt = []
+    desc = {
+        'type':None,
+        'range':None,
+        'attrib':None,
+    }
+    states = ['init','do','so','dc','mc','lc','rc','no']
+    rslt = []
+    si = 0
+    ei = 0
+    state = 'init'
+    input = s[0]
+    numbuf =''
+    if(s[0] == '$'):
+        state = 'do'
+    else:
+        state = 'so'
+    for i in range(1,lngth):
+        input = s[i]
+        if(state == 'do'):
+            if(input == '$'):
+                state = 'dc'
+            elif(input == '&'):
+                state = 'mc'
+            elif(input == "`"):
+                state = 'lc'
+            elif(input == "'"):
+                state = 'rc'
+            elif(input in "0123456789"):
+                numbuf = input
+                state = 'no'
+            else:
+                raise Exception("input error only '$$','$&','$`','$','$n',permited")
+        elif(state == 'so'):
+            if(input == '$'):
+                #close so
+                ei = i 
+                d = copy.deepcopy(desc)
+                d['range'] = (si,ei)
+                d['attrib'] = s[si:ei]
+                d['type'] = 'str'
+                rslt.append(d)
+                si = ei
+                state = 'do'
+            else:
+                #continue collect s
+                pass
+        else:
+            if("c" in state):
+                ei = i 
+                d = copy.deepcopy(desc)
+                d['range'] = (si,ei)
+                if(state == 'dc'):
+                    d['type'] = 'dollar'
+                    d['attrib'] = '$'
+                elif(state == 'mc'):
+                    d['type'] = 'match'
+                elif(state == 'lc'):
+                    d['type'] = 'left'
+                elif(state == 'rc'):
+                    d['type'] = 'right'
+                if(input == '$'):
+                    #goto do
+                    state = 'do'
+                else:
+                    #goto so
+                    state = 'so'
+                rslt.append(d)
+                si = ei
+            elif(state == 'no'):
+                if(input == '$'):
+                    ei = i 
+                    d = copy.deepcopy(desc)
+                    d['range'] = (si,ei)
+                    d['type'] = 'num'
+                    d['attrib'] = int(numbuf)
+                    numbuf = ''
+                    state = 'do'
+                    rslt.append(d)
+                    si = ei
+                elif(input in "0123456789"):
+                    numbuf = numbuf + input
+                else:
+                    ei = i 
+                    d = copy.deepcopy(desc)
+                    d['range'] = (si,ei)
+                    d['type'] = 'num'
+                    d['attrib'] = int(numbuf)
+                    numbuf = ''
+                    state = 'do'
+                    rslt.append(d)
+                    si = ei
+            else:
+                raise Exception('state error')
+    if(state == 'so'):
+        ei = i + 1
+        d = copy.deepcopy(desc)
+        d['range'] = (si,ei)
+        d['type'] = 'str'
+        d['attrib'] = s[si:ei]
+        rslt.append(d)
+    elif('c' in state):
+        ei = i + 1 
+        d = copy.deepcopy(desc)
+        d['range'] = (si,ei)
+        if(state == 'dc'):
+            d['type'] = 'dollar'
+            d['attrib'] = '$'
+        elif(state == 'mc'):
+            d['type'] = 'match'
+        elif(state == 'lc'):
+            d['type'] = 'left'
+        elif(state == 'rc'):
+            d['type'] = 'right'
+        rslt.append(d)
+    elif(state == 'no'):
+        ei = i + 1
+        d = copy.deepcopy(desc)
+        d['range'] = (si,ei)
+        d['type'] = 'num'
+        d['attrib'] = int(numbuf)
+        numbuf = ''
+        rslt.append(d)
+    else:
+        raise Exception('state error')
+    return(rslt)
+
+def replace_creat_newsub(params,match,groups,left,right):
+    '''
+        params = 'UUU$$EE$&$1'
+        
+        s = '^^^abc12345#$*%tail'
+        regex = re.compile("([a-z]+)(\d*)([^\w]*)")
+        m = regex.search(s)
+        match = m.group(0)
+        match
+        left = s[:m.start()]
+        left
+        right = s[m.end():]
+        right
+        groups = m.groups()
+        groups
+        offset = m.start()
+        offset
+        replace_creat_newsub(params,match,groups,left,right)
+    '''
+    desc_arr = replace_newsub_parser(params)
+    rslt = ''
+    for i in range(0,desc_arr.__len__()):
+        desc = desc_arr[i]
+        t = desc['type']
+        attrib=desc['attrib']
+        if(t == 'dollar'):
+            rslt = rslt + attrib
+        elif(t == 'match'):
+            rslt = rslt + match
+        elif(t == 'left'):
+            rslt = rslt + left
+        elif(t == 'right'):
+            rslt = rslt + right
+        elif(t == 'num'):
+            rslt = rslt + groups[attrib]
+        else:
+            rslt = rslt + attrib
+    return(rslt)
+
+def replace(s,sub,newsub):
+    '''
+        s = 'aaBBaaBB'
+        replace(s,'aa','AA')
+        
+        s = '678abc12345uvw444tail333'
+        regex = re.compile('[0-9]+')
+        replace(s,regex,'AA')
+        
+        
+        def replacer(*args):
+            match= args[0] 
+            p1=args[1] 
+            p2=args[2] 
+            p3=args[3]
+            offset=args[-2]
+            s=args[-1]
+            return(elel.join([p1,p2,p3],'-'))
+        
+        s = '^^^abc12345#$*%tail'
+        regex = re.compile("([a-z]+)(\d*)([^\w]*)")
+        replace(s,regex,replacer)
+        
+        #refer to https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/String/replace
+        #for params
+        #$$  '$'
+        #$&  match
+        #$`  left
+        #$'  right
+        #$n  groups(n)
+        ####
+        s = '^^^abc12345#$*%tail'
+        regex = re.compile("([a-z]+)(\d*)([^\w]*)")
+        m = regex.search(s)
+        match = m.group(0)
+        match
+        left = s[:m.start()]
+        left
+        right = s[m.end():]
+        right
+        groups = m.groups()
+        groups
+        offset = m.start()
+        offset
+        ####
+        params = "@@$$@@$&@@$`@@$'@@$1"
+        s = '^^^abc12345#$*%tail'
+        regex = re.compile("([a-z]+)(\d+)([^\w]+)")
+        replace(s,regex,params)
+        
+    '''
+    t1 = type(sub)
+    tr = type(re.compile(""))
+    cond1 = (t1 == tr)
+    t2 = type(newsub)
+    tf = type(lambda x:x)
+    cond2 = (t2 == tf)
+    if(cond1):
+        regex = sub
+    else:
+        regex = re.compile(re.escape(sub))
+    m = regex.search(s)
+    match = m.group(0)
+    left = s[:m.start()]
+    right = s[m.end():]
+    groups = list(m.groups())
+    offset = m.start()
+    if(cond2):
+        #match, p1, p2, p3,......., offset,s
+        args = [match]
+        args.extend(groups)
+        args.append(offset)
+        args.append(s)
+        rslt = newsub(*args)
+    else:
+        newsub = replace_creat_newsub(newsub,match,groups,left,right)
+        rslt = re.sub(regex,newsub,s)
+    return(rslt)
+
+def slice(s,si,ei=None,**kwargs):
+    '''
+        # in python , the string-length means  unicode-char-lngth 
+        # in javascript, the length means how-many 16-bit unit
+        # for example:
+        # run in js 
+        bs = b'\xd85\xdcRO`N\xecY}\xd85\xdcR'
+        s = bs.decode('utf_16_be')        
+        s        
+        bytstrm2us(bs,style='js')
+        slice(s,0,1,style='py')
+        slice(s,0,2,style='py')
+        slice(s,0,3,style='py')
+        slice(s,0,4,style='py')
+        #
+        slice(s,0,1,style='js')
+        slice(s,0,2,style='js')
+        slice(s,0,3,style='js')
+        slice(s,0,4,style='js')
+        slice(s,0,5,style='js')
+        slice(s,0,6,style='js')
+        slice(s,0,7,style='js')
+    '''
+    lngth = length(s,**kwargs)
+    if('style' in kwargs):
+        style = kwargs['style']
+    else:
+        style = 'py'
+    if(ei == None):
+        ei = lngth
+    else:
+        pass
+    si = elel.uniform_index(si,lngth)
+    ei = elel.uniform_index(ei,lngth)
+    if(style == 'py'):
+        part = s[si:ei]
+        return(part)
+    else:
+        locs = str_code_points(s,encode='utf_16_be')
+        locs = elel.array_map(locs,lambda ele:ele//2)
+        us = str2us(s,encode = 'utf_16_be')
+        uarr = us2uarr(us,mode='both')
+        jscharr = uarr2jscharr(uarr)
+        slb = elel.lower_bound(locs,si)
+        sub = elel.upper_bound(locs,si)
+        elb = elel.lower_bound(locs,ei)
+        eub = elel.upper_bound(locs,ei)
+        part1 = jscharr[si:sub]
+        s1 = elel.join(part1,'')
+        part2 = uarr[sub:elb]
+        s2 = uarr2str(part2,style='js')
+        part3 = jscharr[elb:ei]
+        s3 = elel.join(part3,'')
+        s = s1 + s2 + s3
+        return(s)
 
 
-# String.prototype.concat()
-# String.prototype.endsWith()
-# String.prototype.includes()
-# String.prototype.indexOf()
-# String.prototype.lastIndexOf()
+
+
+
+
+
+
 # String.prototype.localeCompare()
 # String.prototype.match()
 # String.prototype.normalize()
-# String.prototype.padEnd()
-# String.prototype.padStart()
-# String.prototype.repeat()
-# String.prototype.replace()
+
+
+
 # String.prototype.search()
 # String.prototype.split()
 # String.prototype.startsWith()
@@ -1558,65 +1959,20 @@ def divide(s,interval):
     arr = elel.divide(s,interval)
     return(arr)
 
-def slice(s,si,ei=None,**kwargs):
+def indexesAll(s,c):
     '''
-        # in python , the string-length means  unicode-char-lngth 
-        # in javascript, the length means how-many 16-bit unit
-        # for example:
-        # run in js 
-        bs = b'\xd85\xdcRO`N\xecY}\xd85\xdcR'
-        s = bs.decode('utf_16_be')        
-        s        
-        bytstrm2us(bs,style='js')
-        slice(s,0,1,style='py')
-        slice(s,0,2,style='py')
-        slice(s,0,3,style='py')
-        slice(s,0,4,style='py')
-        #
-        slice(s,0,1,style='js')
-        slice(s,0,2,style='js')
-        slice(s,0,3,style='js')
-        slice(s,0,4,style='js')
-        slice(s,0,5,style='js')
-        slice(s,0,6,style='js')
-        slice(s,0,7,style='js')
+        s = "aBCaDEa"
+        indexesAll(s,"a")
     '''
-    lngth = length(s,**kwargs)
-    if('style' in kwargs):
-        style = kwargs['style']
-    else:
-        style = 'py'
-    if(ei == None):
-        ei = lngth
-    else:
-        pass
-    si = elel.uniform_index(si,lngth)
-    ei = elel.uniform_index(ei,lngth)
-    if(style == 'py'):
-        part = s[si:ei]
-        return(part)
-    else:
-        locs = str_code_points(s,encode='utf_16_be')
-        locs = elel.array_map(locs,lambda ele:ele//2)
-        us = str2us(s,encode = 'utf_16_be')
-        uarr = us2uarr(us,mode='both')
-        jscharr = uarr2jscharr(uarr)
-        slb = elel.lower_bound(locs,si)
-        sub = elel.upper_bound(locs,si)
-        elb = elel.lower_bound(locs,ei)
-        eub = elel.upper_bound(locs,ei)
-        part1 = jscharr[si:sub]
-        s1 = elel.join(part1,'')
-        part2 = uarr[sub:elb]
-        s2 = uarr2str(part2,style='js')
-        part3 = jscharr[elb:ei]
-        s3 = elel.join(part3,'')
-        s = s1 + s2 + s3
-        return(s)
+    rslt = []
+    for i in range(0,s.__len__()):
+        if(s[i]==c):
+            rslt.append(i)
+        else:
+            pass
+    return(rslt)
 
 
-# def str_indexes(s,c):
-# def str_repeat(s,times):
 # def str_xor_str(s1,s2):
 # def str_to_bool(s,**kwargs):
 # def str_lstrip(s,char,count):
@@ -1628,25 +1984,13 @@ def slice(s,si,ei=None,**kwargs):
 # def str_display_width(s):
 # def str_prepend_basedon_displaywidth(s,width,**kwargs):
 # def str_append_basedon_displaywidth(s,width,**kwargs):
-# def str_to_ord_list(s):
-# def str_to_slash_u_str(a_string,with_slash_u=1):
-# def str_to_unicode_num_array(a_string):
-# def str_to_unicode_hex_str(s):
 # def str_tail_to_head(s, tail_len,**kwargs):
 # def str_head_to_tail(s, head_len,**kwargs):
 
-# def unshift(l,*args):
-# def unsigned_right_shift(num,shift_num,**kwargs):
-# def logical_or(x,y):
-# def logical_and(x,y):
-# def newDate_num(**kwargs):
-# def clock_seconds_with_accuracy(accuracy):
-# def toString(n,radix,**kwargs):
-# def uint2str(ui,**kwargs):
-# def str2uint(s,**kwargs):
-# def fromCharCode(*args,**kwargs):
-# def scinumstr2numstr(sci):
-# def parseInt(nstr,radix=10,**kwargs):
+
+
+
+
 
 
 
