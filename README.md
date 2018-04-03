@@ -30,10 +30,18 @@ In Progressing.......
 ├──13. [replace](estring/Images/replace.1.png)  <br>
 ├──13. [replace](estring/Images/replace.2.png)  <br>
 ├──13. [replace](estring/Images/replace.3.png)  <br>
+├──14. [slice\<0\>](estring/Images/slice.0.png)  <br>
+├──14. [slice\<1\>](estring/Images/slice.1.png)  <br>
+├──15. [split](estring/Images/split.0.png)  <br>
+├──16. [startsWith](estring/Images/startsWith.0.png)  <br>
+├──17. [substr](estring/Images/substr.0.png)  <br>
+├──18. [substring](estring/Images/substring.0.png)  <br>
+├──19. [toLowerCase](estring/Images/toLowerCase.0.png)  <br>
+├──20. [toUpperCase](estring/Images/toUpperCase.0.png)  <br>
+├──21. [trim](estring/Images/trim.0.png)  <br>
+├──22. [trimLeft](estring/Images/trimLeft.0.png)  <br>
+├──23. [trimRight](estring/Images/trimRight.0.png)  <br>
 ├──. [](estring/Images/.0.png)  <br>
-
-├──19. [slice\<0\>](estring/Images/slice.0.png)  <br>
-├──19. [slice\<1\>](estring/Images/slice.1.png)  <br>
 
 -----------------------------------------------------------------------
 
@@ -42,6 +50,22 @@ In Progressing.......
 -----------------------------------------------------------------------
 >├──0. [divide](estring/Images/divide.0.png)  <br>
 ├──1. [indexesAll](estring/Images/indexesAll.0.png)  <br>
+├──2. [strip](estring/Images/strip.0.png)  <br>
+├──3. [lstrip](estring/Images/lstrip.0.png)  <br>
+├──4. [rstrip](estring/Images/rstrip.0.png)  <br>
+├──5. [reverse](estring/Images/reverse.0.png)  <br>
+├──6. [prepend](estring/Images/prepend.0.png)  <br>
+├──7. [append](estring/Images/append.0.png)  <br>
+├──8. [xor](estring/Images/xor.0.png)  <br>
+├──9. [tail2head](estring/Images/tail2head.0.png)  <br>
+├──10. [end2begin](estring/Images/tail2head.0.png)  <br>
+├──11. [head2tail](estring/Images/head2tail.0.png)  <br>
+├──12. [begin2end](estring/Images/head2tail.0.png)  <br>
+├──13. [display_width](estring/Images/.0.png)  <br>
+├──14. [prepend_basedon_displaywidth](estring/Images/prepend_basedon_displaywidth.0.png)  <br>
+├──15. [append_basedon_displaywidth](estring/Images/append_basedon_displaywidth.0.png)  <br>
+├──16. [](estring/Images/.0.png)  <br>
+├──17. [](estring/Images/.0.png)  <br>
 -----------------------------------------------------------------------
 
 
