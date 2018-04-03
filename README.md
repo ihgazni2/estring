@@ -1,11 +1,11 @@
 
 # estring
 >__javascript style APIs for string__
-In Progressing.......
+
 
 # install
 >__pip3 install estring__
-In Progressing.......
+
 
 ## javascript APIs
 -----------------------------------------------------------------------
