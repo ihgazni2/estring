@@ -1809,6 +1809,12 @@ def replace(s,sub,newsub):
     else:
         regex = re.compile(re.escape(sub))
     m = regex.search(s)
+    ####
+    if(m == None):
+        return(s)
+    else:
+        pass
+    ####
     match = m.group(0)
     left = s[:m.start()]
     right = s[m.end():]
