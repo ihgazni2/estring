@@ -1675,6 +1675,12 @@ def replace_newsub_parser(params):
                     si = ei
             else:
                 raise Exception('state error')
+    ####
+    if(lngth == 1):
+        i = 0
+    else:
+        pass
+    ####
     if(state == 'so'):
         ei = i + 1
         d = copy.deepcopy(desc)
