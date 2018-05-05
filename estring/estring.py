@@ -1580,6 +1580,12 @@ def replace_newsub_parser(params):
         pobj(desc_arr)
     '''
     s = params
+    ####
+    if(s == ''):
+        return('')
+    else:
+        pass
+    ####
     lngth = s.__len__()
     rslt = []
     desc = {
