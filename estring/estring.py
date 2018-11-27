@@ -2379,6 +2379,11 @@ def append_basedon_displaywidth(s,width,**kwargs):
     return(new_S)
 
 
+def get_substr_arr_via_spans(s,spans):
+    new_spans = elel.rangize_fullfill(spans,s.__len__())
+    arr = elel.array_map(new_spans,lambda ele:s[ele[0]:ele[1]])
+    return(arr)
+
 ##C C++ std::string APIs
 
 ##lisp APIs
