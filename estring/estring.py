@@ -1570,6 +1570,16 @@ def padStart(s1,targetLength,s2="\x20"):
 def repeat(s,times):
     return(s*times)
 
+
+def replace_seqs_at(s,locs,values):
+    arr = list(s)
+    locs = list(locs)
+    for i in range(locs.__len__()):
+        loc = locs[i]
+        arr[loc] = values[i]
+    return(elel.join(arr,""))
+
+
 def replace_newsub_parser(params):
     '''
         params = 'abc$$ef$&oo'
