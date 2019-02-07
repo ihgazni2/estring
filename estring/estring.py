@@ -2,7 +2,7 @@ import struct
 import elist.elist as elel
 import re
 import copy
-
+import pty
 
 #LE           Little- Endian
 #BE           Big-Endian
@@ -2393,6 +2393,21 @@ def get_substr_arr_via_spans(s,spans):
     new_spans = elel.rangize_fullfill(spans,s.__len__())
     arr = elel.array_map(new_spans,lambda ele:s[ele[0]:ele[1]])
     return(arr)
+
+######
+
+def str2io(s,codec="utf-8"):
+    '''
+        ugly, because for "io.StringIO" and "io.BytesIO" <io.UnsupportedOperation: fileno>
+        so ugly implementation  for giving  string a fileno
+    '''
+    master_fd, slave_fd = pty.openpty()
+    os.write(slave_fd,s.encode(codec))
+    return((master_fd, slave_fd))
+
+
+#####
+
 
 ##C C++ std::string APIs
 
