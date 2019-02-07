@@ -3,6 +3,8 @@ import elist.elist as elel
 import re
 import copy
 import pty
+import os
+
 
 #LE           Little- Endian
 #BE           Big-Endian
