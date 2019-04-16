@@ -1914,6 +1914,10 @@ def slice(s,si,ei=None,**kwargs):
 
 
 #@@@
+
+
+
+
 def split(s,sp="",limit=None):
     '''
         regex=re.compile("[0-9]+")
@@ -2395,6 +2399,48 @@ def get_substr_arr_via_spans(s,spans):
     new_spans = elel.rangize_fullfill(spans,s.__len__())
     arr = elel.array_map(new_spans,lambda ele:s[ele[0]:ele[1]])
     return(arr)
+
+def search_gen(regex,s,*args):
+    args = list(args)
+    arrlen = args.__len__()
+    if(arrlen==0):
+        start = 0
+        end = s.__len__()
+    elif(arrlen==1):
+        start = args[0]
+        end = s.__len__()
+    else:
+        start = args[0]
+        end = args[1]
+    cur = start
+    while(True):
+        m = regex.search(s,cur)
+        if(m):
+            if(m.start()<end):
+                cur = m.end()
+            else:
+                pass
+            yield(m)
+        else:
+            return(None)
+
+
+
+def find_all_spans(regex,s):
+    rslt = []
+    g = search_gen(regex,s)
+    for each in g:
+        ele = (each.start(),each.end())
+        rslt.append(ele)
+    return(rslt)
+
+
+def regex_divide(regex,s):
+    spans = find_all_spans(regex,s)
+    return(get_substr_arr_via_spans(s,spans))
+
+
+
 
 ######
 

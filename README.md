@@ -33,6 +33,9 @@
 ├──14. [slice\<0\>](estring/Images/slice.0.png)  <br>
 ├──14. [slice\<1\>](estring/Images/slice.1.png)  <br>
 ├──15. [split](estring/Images/split.0.png)  <br>
+├──15. [search_gen](estring/Images/search_gen.0.png)  <br>
+├──15. [find_all_spans](estring/Images/find_all_spans.0.png)  <br>
+├──15. [regex_divide](estring/Images/regex_divide.0.png)  <br>
 ├──16. [startsWith](estring/Images/startsWith.0.png)  <br>
 ├──17. [substr](estring/Images/substr.0.png)  <br>
 ├──18. [substring](estring/Images/substring.0.png)  <br>
