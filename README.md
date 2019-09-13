@@ -150,7 +150,42 @@
 ├──51. [uarr2str](estring/Images/uarr2str.0.png)  <br>
 ├──52. [str2uarr](estring/Images/str2uarr.0.png)  <br>
 ├──53. [str2jscharr](estring/Images/str2jscharr.0.png)  <br>
-├──54. [](estring/Images/.0.png)  <br>
-├──55. [](estring/Images/.0.png)  <br>
-├──56. [](estring/Images/.0.png)  <br>
+├──54. [camel2dash](estring/Images/.0.png)  <br>
+├──55. [camel2lod](estring/Images/.0.png)  <br>
+├──56. [capinit](estring/Images/.0.png)  <br>
+├──57. [dash2camel](estring/Images/.0.png)  <br>
+├──58. [dash2lod](estring/Images/.0.png)  <br>
+├──59. [lod2camel](estring/Images/.0.png)  <br>
+├──60. [lod2dash](estring/Images/.0.png)  <br>
+
+
+
+
+## CLI
+-----------------------------------------------------------------------
+* eses_camel2dash   
+* eses_camel2lod    
+* eses_capinit      
+* eses_dash2camel   
+* eses_dash2lod     
+* eses_lod2camel    
+* eses_lod2dash 
+
+
+    estring# eses_camel2dash   acceptCharset
+    accept-charset
+    estring# eses_camel2lod    acceptCharset
+    accept_charset
+    estring# eses_capinit      accept
+    Accept
+    estring# eses_dash2camel   accept-charset
+    acceptCharset
+    estring# eses_dash2lod     accept-charset
+    accept_charset
+    estring# eses_lod2camel    accept_charset
+    acceptCharset
+    estring# eses_lod2dash     accept_charset
+    accept-charset
+
+-----------------------------------------------------------------------
 
