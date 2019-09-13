@@ -2468,4 +2468,55 @@ def str2io(s,codec="utf-8"):
 ##other languages.....
 
 
+######code tool
 
+def cap_init(s):
+    if(s==""):
+        return(s)
+    else:
+        return(s[0].upper()+s[1:])
+
+
+def camel2lod(camel):
+    rslt = []
+    cache = ""
+    for i in range(len(camel)):
+        c = camel[i]
+        if(str.isupper(c)):
+            rslt.append(cache.lower())
+            cache = c
+        else:
+            cache = cache + c
+    s = ''
+    for i in range(0,len(rslt)):
+        s = s + rslt[i] + "_"
+    if(cache == ""):
+        return(s[:-1])
+    else:
+        return(s + cache.lower())
+
+def lod2camel(lod):
+    arr = lod.split("_")
+    arr[0] = arr[0].lower()
+    for i in range(1,len(arr)):
+        arr[i] = cap_init(arr[i])
+    s = ''
+    for i in range(0,len(arr)):
+        s = s + arr[i]
+    return(s)
+
+def camel2dash(camel):
+    lod = camel2lod(camel)
+    return(lod2dash(lod))
+
+def dash2camel(dash):
+    lod = dash.replace("-","_")
+    return(lod2camel(lod))
+
+def lod2dash(lod):
+    return(lod.replace("_","-"))
+
+def dash2lod(dash):
+    return(dash.replace("-","_"))
+
+#####
