@@ -1,2 +1,3 @@
 recursive-include ASSETOOL *
 recursive-include estring *
+recursive-include estring/emoji/resources *
