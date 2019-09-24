@@ -6,7 +6,9 @@ from estring.emoji.emoji import _kl
 from estring.emoji.emoji import _vl
 import sys
 #import estring
-import estring.emoji
+#import estring.emoji
+import estring.emoji.resources
+
 
 _dkl = _kl
 
