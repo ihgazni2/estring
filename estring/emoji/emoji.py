@@ -1,4 +1,4 @@
-#import estring
+import estring
 #import estring.emoji
 #import estring.emoji.resources
 from efdir import fs
@@ -6,7 +6,6 @@ import pkg_resources
 from elist.elist import mapv
 from dlist.dlist import dlist2dict
 from edict.edict import d2kvlist
-#import estring.emoji.resources as resources
 
 dtbfn = pkg_resources.resource_filename("estring","emoji/resources/emoji.dtb.json")
 dtb = fs.rjson(dtbfn)
