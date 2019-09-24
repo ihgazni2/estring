@@ -1,8 +1,9 @@
-/usr/local/lib/python3.6/dist-packages/estring-0.7-py3.6.egg
+/usr/local/lib/python3.6/dist-packages/estring-0.8-py3.6.egg
 /usr/local/bin/eses_camel2dash
 /usr/local/bin/eses_camel2lod
 /usr/local/bin/eses_capinit
 /usr/local/bin/eses_dash2camel
 /usr/local/bin/eses_dash2lod
+/usr/local/bin/eses_h5entity
 /usr/local/bin/eses_lod2camel
 /usr/local/bin/eses_lod2dash
