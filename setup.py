@@ -23,6 +23,10 @@ setup(
                 'eses_emoji_strict=estring.BINS.emoji:strict',
                 ]
             },
+      include_package_data=True,
+      package_data = {
+          'resources':["estring/emoji/resources/*"]
+      },
         classifiers=[
             'Environment :: Console',
             'Environment :: Web Environment',
