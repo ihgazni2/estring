@@ -187,5 +187,36 @@
         estring# eses_lod2dash     accept_charset
         accept-charset
 
+
+* eses_h5entity_strict
+
+        ESTRING# eses_h5entity_strict theta
+        θ
+        < thetasym >
+        < thetav >
+        ESTRING#
+        ESTRING# eses_h5entity_strict the
+        < there4 >
+        < therefore >
+        < theta >
+        < thetasym >
+        < thetav >
+        ESTRING#
+        ESTRING# eses_h5entity_strict theta
+        θ
+        < thetasym >
+        < thetav >
+        ESTRING#
+        ESTRING# eses_h5entity_strict alph
+        < alpha >
+        ESTRING#
+        ESTRING# eses_h5entity_strict alpha
+        α
+        ESTRING#
+
+*eses_h5entity_loose
+
+
+
 -----------------------------------------------------------------------
 

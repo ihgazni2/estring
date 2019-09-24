@@ -28,9 +28,9 @@ def tab_loose(dkl,kl,vl,cmd):
         dk = dkl[i]
         k = kl[i]
         v = vl[i]
-        if(cmd==k):
+        if(cmd==dk):
             tabs.append((v,'value'))
-        elif(cmd in k):
+        elif(cmd in dk):
             tabs.append((k,'key'))
         else:
             pass
