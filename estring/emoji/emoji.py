@@ -4,8 +4,15 @@ from elist.elist import mapv
 from dlist.dlist import dlist2dict
 from edict.edict import d2kvlist
 
+# MANIFEST.in 设置完毕后
+# 记住在setup.py 设置
+#      include_package_data=True,
+#      package_data = {
+#          'resources':["estring/emoji/resources/*"]
+#      },
 
-dtbfn = pkg_resources.resource_filename("estring","emoji/resources/emoji.dtb.json.py")
+
+dtbfn = pkg_resources.resource_filename("estring","emoji/resources/emoji.dtb.json")
 dtb = fs.rjson(dtbfn)
 _dl = mapv(dtb,lambda row:{row['desc']:row['ord']})
 d = dlist2dict(_dl)

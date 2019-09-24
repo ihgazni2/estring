@@ -25,7 +25,7 @@ setup(
             },
       include_package_data=True,
       package_data = {
-          'resources':["estring/emoji/resources/*"]
+          'resources':["estring/emoji/resources/*.json"]
       },
         classifiers=[
             'Environment :: Console',
