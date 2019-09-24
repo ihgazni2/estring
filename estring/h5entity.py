@@ -27,6 +27,8 @@ def _get_html5_entities():
 h5 = _get_html5_entities()
 
 _kl = list(html.entities.html5.keys())
+_dkl = [k.strip(";") for k in _kl]
 _vl = list(html.entities.html5.values())
+
 
 #from estring.h5entity import h5
