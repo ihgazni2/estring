@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 setup(
         name="estring",
-        version = "0.7",
+        version = "0.8",
         description="javascript style string APIs",
         author="dapeli",
         url="https://github.com/ihgazni2/estring",
@@ -16,7 +16,8 @@ setup(
                 'eses_camel2dash=estring.BINS.camel2dash:main',
                 'eses_dash2camel=estring.BINS.dash2camel:main',
                 'eses_lod2dash=estring.BINS.lod2dash:main',
-                'eses_dash2lod=estring.BINS.dash2lod:main'
+                'eses_dash2lod=estring.BINS.dash2lod:main',
+                'eses_h5entity=estring.BINS.h5entity:main'
                 ]
             },
         classifiers=[
