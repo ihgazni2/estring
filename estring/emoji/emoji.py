@@ -5,8 +5,7 @@ from dlist.dlist import dlist2dict
 from edict.edict import d2kvlist
 
 
-dtbfn = pkg_resources.resource_filename("estring","emoji/resources/tst.py")
-dtbfn = pkg_resources.resource_filename("estring","emoji/resources/emoji.dtb.json")
+dtbfn = pkg_resources.resource_filename("estring","emoji/resources/emoji.dtb.json.py")
 dtb = fs.rjson(dtbfn)
 _dl = elel.mapv(dtb,lambda row:{row['desc']:row['ord']})
 d = dlist2dict(_dl)
