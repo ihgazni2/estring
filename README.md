@@ -171,8 +171,6 @@
 * eses_lod2camel    
 * eses_lod2dash 
 
-### cmd
------------
 
         estring# eses_camel2dash   acceptCharset
         accept-charset
