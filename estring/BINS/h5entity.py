@@ -14,9 +14,9 @@ def tab_strict(dkl,kl,vl,cmd):
         k = kl[i]
         v = vl[i]
         if(cmd==dk):
-            tabs.append(v)
+            tabs.append((v,'value'))
         elif(dk.startswith(cmd)):
-            tabs.append(k)
+            tabs.append((k,'key'))
         else:
             pass
     return(tabs)
@@ -29,21 +29,20 @@ def tab_loose(dkl,kl,vl,cmd):
         k = kl[i]
         v = vl[i]
         if(cmd==k):
-            tabs.append(v)
+            tabs.append((v,'value'))
         elif(cmd in k):
-            tabs.append(k)
+            tabs.append((k,'key'))
         else:
             pass
     return(tabs)
 
 
-
 def parr(tabs):
-    if(len(tabs)==1):
-        print(tabs)
-    else:
-        for each in tabs:
-            print(each)
+    for t in tabs:
+        if(t[1]=='value'):
+            print(t[1])
+        else:
+            print("< "+t[0].strip(';')+" >")
 
 
 cmd = ""
