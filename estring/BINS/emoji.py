@@ -5,7 +5,7 @@ from estring.emoji.emoji import emoji
 from estring.emoji.emoji import _kl
 from estring.emoji.emoji import _vl
 import sys
-
+import estring
 
 _dkl = _kl
 
