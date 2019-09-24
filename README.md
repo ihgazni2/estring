@@ -7,8 +7,68 @@
 >__pip3 install estring__
 
 
+## QUICK
+---------
+
+        BASIC_PY_LESSONS# eses_emoji_strict te
+        < telephone >
+        < tent >
+        < teacup_without_handle >
+        < ten_o_clock >
+        < ten_thirty >
+        < tennis >
+        < teddy_bear >
+        < telephone_receiver >
+        < television >
+        < tear_off_calendar >
+        < test_tube >
+        < telescope >
+        BASIC_PY_LESSONS#
+        BASIC_PY_LESSONS# eses_emoji_strict telephone
+        ☎
+        < telephone_receiver >
+        BASIC_PY_LESSONS#
+        BASIC_PY_LESSONS# eses_emoji_strict telescope
+        🔭
+        BASIC_PY_LESSONS#
+
+        BASIC_PY_LESSONS# eses_emoji_loose sneezing
+        < cowboy_hat_face_sneezing_face_0 >
+        < cowboy_hat_face_sneezing_face_1 >
+        < cowboy_hat_face_sneezing_face_2 >
+        < cowboy_hat_face_sneezing_face_3 >
+        < cowboy_hat_face_sneezing_face_4 >
+        < cowboy_hat_face_sneezing_face_5 >
+        < cowboy_hat_face_sneezing_face_6 >
+        < cowboy_hat_face_sneezing_face_7 >
+        < sneezing_face >
+        BASIC_PY_LESSONS#
+        BASIC_PY_LESSONS# eses_emoji_loose cowboy_hat_face_sneezing_face_3
+        🤣
+        BASIC_PY_LESSONS# eses_emoji_loose cowboy_hat_face_sneezing_face_4
+        🤤
+        BASIC_PY_LESSONS# eses_emoji_loose cowboy_hat_face_sneezing_face_5
+        🤥
+        BASIC_PY_LESSONS#
+
+
+
+
 ## SPECIAL CHARS APIs
 -----------------------------------------------------------------------
+
+### EMOJI API
+
+        from estring.emoji.emoji  import emoji
+        >>> emoji.te
+        emoji.teacup_without_handle  emoji.telephone              emoji.television             emoji.tennis
+        emoji.tear_off_calendar      emoji.telephone_receiver     emoji.ten_o_clock            emoji.tent
+        emoji.teddy_bear             emoji.telescope              emoji.ten_thirty             emoji.test_tube
+        >>> emoji.teacup_without_handle
+        '🍵'
+        >>>
+
+
 
 ### H5 ENTITY
 
@@ -249,6 +309,44 @@
         ESTRING# eses_h5entity_loose OpenCurlyDoubleQuote
         “
         ESTRING#
+
+*eses_emoji_strict
+
+        BASIC_PY_LESSONS# eses_emoji_strict te
+        < telephone >
+        < tent >
+        < teacup_without_handle >
+        < ten_o_clock >
+        < ten_thirty >
+        < tennis >
+        < teddy_bear >
+        < telephone_receiver >
+        < television >
+        < tear_off_calendar >
+        < test_tube >
+        < telescope >
+        BASIC_PY_LESSONS#
+        BASIC_PY_LESSONS# eses_emoji_strict telephone
+        ☎
+        < telephone_receiver >
+        BASIC_PY_LESSONS#
+        BASIC_PY_LESSONS# eses_emoji_strict telescope
+        🔭
+        BASIC_PY_LESSONS#
+
+
+*eses_emoji_loose
+
+        BASIC_PY_LESSONS# eses_emoji_loose gon
+        < mahjong_red_dragon >
+        < dragon_face >
+        < dragon >
+        < mahjong_tile_red_dragon >
+        BASIC_PY_LESSONS#
+        BASIC_PY_LESSONS# eses_emoji_strict mahjong_red_dragon
+        🀄
+        BASIC_PY_LESSONS#
+
 
 -----------------------------------------------------------------------
 
