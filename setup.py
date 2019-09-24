@@ -17,7 +17,8 @@ setup(
                 'eses_dash2camel=estring.BINS.dash2camel:main',
                 'eses_lod2dash=estring.BINS.lod2dash:main',
                 'eses_dash2lod=estring.BINS.dash2lod:main',
-                'eses_h5entity=estring.BINS.h5entity:main'
+                'eses_h5entity_loose=estring.BINS.h5entity:loose',
+                'eses_h5entity_strict=estring.BINS.h5entity:strict',
                 ]
             },
         classifiers=[
