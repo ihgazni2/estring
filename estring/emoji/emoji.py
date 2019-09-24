@@ -7,7 +7,7 @@ from edict.edict import d2kvlist
 
 dtbfn = pkg_resources.resource_filename("estring","emoji/resources/emoji.dtb.json.py")
 dtb = fs.rjson(dtbfn)
-_dl = elel.mapv(dtb,lambda row:{row['desc']:row['ord']})
+_dl = mapv(dtb,lambda row:{row['desc']:row['ord']})
 d = dlist2dict(_dl)
 _kl,_vl = d2kvlist(d)
 
