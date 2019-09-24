@@ -1,9 +1,9 @@
-from estring.emoji import dtbfn
-from estring.emoji import dtb
-from estring.emoji import d
-from estring.emoji import emoji
-from estring.emoji import _kl
-from estring.emoji import _vl
+from estring.emoji.emoji import dtbfn
+from estring.emoji.emoji import dtb
+from estring.emoji.emoji import d
+from estring.emoji.emoji import emoji
+from estring.emoji.emoji import _kl
+from estring.emoji.emoji import _vl
 import sys
 
 
