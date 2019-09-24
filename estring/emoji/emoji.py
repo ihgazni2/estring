@@ -6,9 +6,9 @@ import pkg_resources
 from elist.elist import mapv
 from dlist.dlist import dlist2dict
 from edict.edict import d2kvlist
-import estring.emoji.resources as resources
+#import estring.emoji.resources as resources
 
-dtbfn = pkg_resources.resource_filename("resources","emoji.dtb.json")
+dtbfn = pkg_resources.resource_filename("estring","emoji/resources/emoji.dtb.json")
 dtb = fs.rjson(dtbfn)
 _dl = elel.mapv(dtb,lambda row:{row['desc']:row['ord']})
 d = dlist2dict(_dl)
