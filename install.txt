@@ -4,6 +4,7 @@
 /usr/local/bin/eses_capinit
 /usr/local/bin/eses_dash2camel
 /usr/local/bin/eses_dash2lod
-/usr/local/bin/eses_h5entity
+/usr/local/bin/eses_h5entity_loose
+/usr/local/bin/eses_h5entity_strict
 /usr/local/bin/eses_lod2camel
 /usr/local/bin/eses_lod2dash
