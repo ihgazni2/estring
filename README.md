@@ -7,7 +7,28 @@
 >__pip3 install estring__
 
 
-## javascript APIs
+## SPECIAL CHARS APIs
+-----------------------------------------------------------------------
+
+### H5 ENTITY
+
+        from estring.h5entity import h5
+        >>> h5.theta
+        'θ'
+        >>> h5.the
+        h5.there4     h5.therefore  h5.theta      h5.thetasym   h5.thetav
+        >>> h5.theta
+        'θ'
+        >>> h5.The
+        h5.Therefore  h5.Theta
+        >>> h5.Theta
+        'Θ'
+        >>>
+
+
+
+
+## javascript style string APIs
 -----------------------------------------------------------------------
 >├──0. [length\<0\>](estring/Images/length.0.png)  <br>
 ├──0. [length\<1\>](estring/Images/length.1.png)  <br>
@@ -73,12 +94,17 @@
 
 
 
+-----------------------------------------------------------------------
+
 
 ## IO APIs
 -----------------------------------------------------------------------
 >├──0. [str2io](estring/Images/str2io.0.png)  <br>
 ├──1. [](estring/Images/.0.png)  <br>
 -----------------------------------------------------------------------
+
+
+
 
 
 -----------------------------------------------------------------------
@@ -216,7 +242,13 @@
 
 *eses_h5entity_loose
 
-
+        ESTRING# eses_h5entity_loose Op
+        < OpenCurlyDoubleQuote >
+        < OpenCurlyQuote >
+        ESTRING#
+        ESTRING# eses_h5entity_loose OpenCurlyDoubleQuote
+        “
+        ESTRING#
 
 -----------------------------------------------------------------------
 
