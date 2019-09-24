@@ -53,12 +53,13 @@
 
 ### FORMATTED  EMOJI  RESOURCES
     
-    #this original  txt file is from http://unicode.org/Public/emoji/12.0/
+    #this original  txt file is from 
+    #http://unicode.org/Public/emoji/12.0/
     
-[emoji.csv](https://raw.githubusercontent.com/ihgazni2/estring/master/estring/emoji/resources/emoji.csv)
-[emoji.dtb.json](https://raw.githubusercontent.com/ihgazni2/estring/master/estring/emoji/resources/emoji.dtb.json)
-[emoji.cls.json](https://raw.githubusercontent.com/ihgazni2/estring/master/estring/emoji/resources/emoji.cls.json)
-[emoji.sqlite.db](https://github.com/ihgazni2/estring/blob/master/estring/emoji/resources/emoji.sqlite.db?raw=true)
+[emoji.csv](https://raw.githubusercontent.com/ihgazni2/estring/master/estring/emoji/resources/emoji.csv)<br>
+[emoji.dtb.json](https://raw.githubusercontent.com/ihgazni2/estring/master/estring/emoji/resources/emoji.dtb.json)<br>
+[emoji.cls.json](https://raw.githubusercontent.com/ihgazni2/estring/master/estring/emoji/resources/emoji.cls.json)<br>
+[emoji.sqlite.db](https://github.com/ihgazni2/estring/blob/master/estring/emoji/resources/emoji.sqlite.db?raw=true)<br>
 
 
 ## SPECIAL CHARS APIs
