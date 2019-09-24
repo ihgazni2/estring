@@ -40,7 +40,7 @@ def tab_loose(dkl,kl,vl,cmd):
 def parr(tabs):
     for t in tabs:
         if(t[1]=='value'):
-            print(t[1])
+            print(t[0])
         else:
             print("< "+t[0].strip(';')+" >")
 
