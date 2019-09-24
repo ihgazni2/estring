@@ -1,0 +1,2 @@
+recursive-include ASSETOOL *
+recursive-include estring *

@@ -19,6 +19,8 @@ setup(
                 'eses_dash2lod=estring.BINS.dash2lod:main',
                 'eses_h5entity_loose=estring.BINS.h5entity:loose',
                 'eses_h5entity_strict=estring.BINS.h5entity:strict',
+                'eses_emoji_loose=estring.BINS.emoji:loose',
+                'eses_emoji_strict=estring.BINS.emoji:strict',
                 ]
             },
         classifiers=[
