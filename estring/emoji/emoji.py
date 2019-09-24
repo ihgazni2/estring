@@ -1,5 +1,5 @@
 import estring
-#import estring.emoji
+import estring.emoji
 #import estring.emoji.resources
 from efdir import fs
 import pkg_resources
