@@ -1,3 +1,3 @@
 
-__all__ = ['estring','h5entity']
+__all__ = ['estring','h5entity','consts','emoji']
 
