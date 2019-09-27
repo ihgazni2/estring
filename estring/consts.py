@@ -1,5 +1,7 @@
 import elist.elist as elel
+import edict.edict as eded
 import urllib.parse
+import html
 
 
 
@@ -70,6 +72,34 @@ def get_all_urlquote_nochange_char(s):
     return(rslt)
 
 
+def get_all_htmlescape_nochange_char(s):
+    rslt = ""
+    for ch in s:
+        if(html.escape(ch) == ch):
+            rslt = rslt + ch
+        else:
+            pass
+    return(rslt)
+
+def get_all_htmlescape_change_char(s):
+    rslt = ""
+    for ch in s:
+        if(html.escape(ch) != ch):
+            rslt = rslt + ch
+        else:
+            pass
+    return(rslt)
+
+def get_number_replacer_md():
+    kl = 'ΑΒΓΔΕΖΗΘΙΚ'
+    vl = '0123456789'
+    d1 = eded.kvlist2d(kl,vl)
+    d2 = eded.kvlist2d(vl,kl)
+    d = eded._update(d1,d2)
+    return(d)
+
+
+number_replacer = get_number_replacer_md()
 
 eascii = get_all_easciis()
 ascii_valid_attrname_init_char = get_all_valid_attr_init_char(eascii)
@@ -95,3 +125,7 @@ greece_md = {'alpha': 'α', 'beta': 'β', 'gamma': 'γ', 'delta': 'δ', 'epsilon
 ascii_urlquote_free = get_all_urlquote_nochange_char(eascii)
 ascii_normal_attrname_init = "ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz"
 ascii_normal_attrname_noninit = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz"
+
+ascii_html_escape_free = get_all_htmlescape_nochange_char(estring.consts.eascii)
+
+html_md = {'"': '&quot;', '&': '&amp;', "'": '&#x27;', '<': '&lt;', '>': '&gt;', '&quot;': '"', '&amp;': '&', '&#x27;': "'", '&lt;': '<', '&gt;': '>'}
