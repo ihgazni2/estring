@@ -39,11 +39,11 @@ def is_valid_attr_noninit_char(ch):
     else:
         return(True)
 
-def get_all_valid_attr_init_char(s=eascii):
+def get_all_valid_attr_init_char(s):
     chs = elel.cond_select_values_all(s,cond_func=is_valid_attr_init_char)
     return(elel.join(chs,''))
 
-def get_all_valid_attr_noninit_char(s=eascii):
+def get_all_valid_attr_noninit_char(s):
     chs = elel.cond_select_values_all(s,cond_func=is_valid_attr_noninit_char)
     try:
         chs.remove("\t")
