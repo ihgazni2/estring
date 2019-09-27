@@ -393,5 +393,58 @@
         '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyzªµ·ºÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûüýþÿ'
         >>>
 
+        >>> pobj(greece_md)
+        {
+         'alpha': 'α',
+         'beta': 'β',
+         'gamma': 'γ',
+         'delta': 'δ',
+         'epsilon': 'ε',
+         'zeta': 'ζ',
+         'eta': 'η',
+         'theta': 'θ',
+         'iota': 'ι',
+         'kappa': 'κ',
+         'lambda': 'λ',
+         'mu': 'μ',
+         'nu': 'ν',
+         'xi': 'ξ',
+         'omicron': 'ο',
+         'pi': 'π',
+         'rho': 'ρ',
+         'sigma': 'σ',
+         'tau': 'τ',
+         'upsilon': 'υ',
+         'phi': 'φ',
+         'chi': 'χ',
+         'psi': 'ψ',
+         'omega': 'ω',
+         'α': 'alpha',
+         'β': 'beta',
+         'γ': 'gamma',
+         'δ': 'delta',
+         'ε': 'epsilon',
+         'ζ': 'zeta',
+         'η': 'eta',
+         'θ': 'theta',
+         'ι': 'iota',
+         'κ': 'kappa',
+         'λ': 'lambda',
+         'μ': 'mu',
+         'ν': 'nu',
+         'ξ': 'xi',
+         'ο': 'omicron',
+         'π': 'pi',
+         'ρ': 'rho',
+         'σ': 'sigma',
+         'τ': 'tau',
+         'υ': 'upsilon',
+         'φ': 'phi',
+         'χ': 'chi',
+         'ψ': 'psi',
+         'ω': 'omega'
+        }
+        >>>
+
 
 
