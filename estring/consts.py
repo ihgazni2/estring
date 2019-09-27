@@ -126,6 +126,6 @@ ascii_urlquote_free = get_all_urlquote_nochange_char(eascii)
 ascii_normal_attrname_init = "ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz"
 ascii_normal_attrname_noninit = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz"
 
-ascii_html_escape_free = get_all_htmlescape_nochange_char(estring.consts.eascii)
+ascii_html_escape_free = get_all_htmlescape_nochange_char(eascii)
 
 html_md = {'"': '&quot;', '&': '&amp;', "'": '&#x27;', '<': '&lt;', '>': '&gt;', '&quot;': '"', '&amp;': '&', '&#x27;': "'", '&lt;': '<', '&gt;': '>'}
