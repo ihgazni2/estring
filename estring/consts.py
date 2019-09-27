@@ -1,4 +1,7 @@
 import elist.elist as elel
+import urllib.parse
+
+
 
 def get_all_easciis():
     return(elel.join(elel.mapv(elel.init_range(0,256,1),chr),''))
@@ -57,6 +60,14 @@ def get_all_valid_attr_noninit_char(s):
     return(rslt)
 
 
+def get_all_urlquote_nochange_char(s):
+    rslt = ""
+    for ch in s:
+        if(urllib.parse.quote(ch) == ch):
+            rslt = rslt + ch
+        else:
+            pass
+    return(rslt)
 
 
 
@@ -81,4 +92,6 @@ greece_md = {'alpha': 'α', 'beta': 'β', 'gamma': 'γ', 'delta': 'δ', 'epsilon
 
 
 
-
+ascii_urlquote_free = get_all_urlquote_nochange_char(eascii)
+ascii_normal_attrname_init = "ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz"
+ascii_normal_attrname_noninit = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz"
