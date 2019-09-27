@@ -2519,4 +2519,26 @@ def lod2dash(lod):
 def dash2lod(dash):
     return(dash.replace("-","_"))
 
+##is_xxxx###
+
+def is_int_str(s):
+    n = None
+    try:
+        n = int(s)
+    except:
+        return(False)
+    else:
+        return(str(n) == s)
+
+
+def is_float_str(s):
+    n = None
+    try:
+        n = float(s)
+    except:
+        return(False)
+    else:
+        return(str(n) == s)
+
+
 #####

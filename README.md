@@ -251,6 +251,8 @@
 ├──58. [dash2lod](estring/Images/.0.png)  <br>
 ├──59. [lod2camel](estring/Images/.0.png)  <br>
 ├──60. [lod2dash](estring/Images/.0.png)  <br>
+├──61. [is_int_str](estring/Images/.0.png)  <br>
+├──62. [is_float_str](estring/Images/.0.png)  <br>
 
 
 
