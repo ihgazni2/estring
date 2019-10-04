@@ -442,7 +442,24 @@ def str2us(s,**kwargs):
         #>>>bs = b'\x5c\x75\x34\x66\x36\x30\x5c\x75\x34\x65\x65\x63\x5c\x75\x35\x39\x37\x64\x5c\x55\x30\x30\x30\x31\x64\x34\x35\x32'
         #>>> bs
         #b'\\u4f60\\u4eec\\u597d\\U0001d452'
-        
+        #
+        >>> hex(ord("\\"))
+        '0x5c'
+        >>> hex(ord("u"))
+        '0x75'
+        >>> hex(ord("4"))
+        '0x34'
+        >>> hex(ord("f"))
+        '0x66'
+        >>> hex(ord("6"))
+        '0x36'
+        >>> hex(ord("0"))
+        '0x30'
+        >>>
+        >>> b'\\u4f60\\u4eec\\u597d\\U0001d452'.decode('raw_unicode_escape')
+        '你们好𝑒'
+        >>>
+
         s = bs.decode('raw_unicode_escape')
         s
         us = str2us(s,style='py')
@@ -528,7 +545,7 @@ def slash_show(s,**kwargs):
     if(style == 'py'):
         print(eval("'"+s+"'"))
     else:
-        bs = us2bytstrm(us,style=style)
+        bs = us2bytstrm(s,style=style)
         s = bytstrm2str(bs)
         print(s)
 
@@ -721,6 +738,7 @@ def bytstrm2us(bs,**kwargs):
             cns = bytstrm2chnums(bs,**kwargs)
             hs = chnums2hex(cns,slashx=False)
             arr =  divide(hs,4)
+            arr = list(map('{:0>4}'.format,arr))
             def cond_func(ele):
                 return('\\u'+ele)
             arr = elel.array_map(arr,cond_func)

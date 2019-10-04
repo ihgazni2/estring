@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 setup(
         name="estring",
-        version = "1.4",
+        version = "1.5",
         description="javascript style string APIs",
         author="dapeli",
         url="https://github.com/ihgazni2/estring",
