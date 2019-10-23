@@ -253,8 +253,7 @@
 ├──60. [lod2dash](estring/Images/.0.png)  <br>
 ├──61. [is_int_str](estring/Images/.0.png)  <br>
 ├──62. [is_float_str](estring/Images/.0.png)  <br>
-
-
+├──63. [reverse_four_bytes_keeping_bitorder](estring/Images/.0.png)  <br>
 
 
 ## CLI

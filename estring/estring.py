@@ -2560,3 +2560,22 @@ def is_float_str(s):
 
 
 #####
+
+##bytes###
+##V + ~[keep bitorder]  + O
+##S + V + Od + <to> + Oi
+#[] 从句
+# @ 时间   <>
+# # 地点   <>
+# $ 时态   <>
+# % 目的   <>杀死它  死就是目的
+# ~ 方式   <via>
+
+def reverse_four_bytes_keeping_bitorder(L):
+    ''' 255       0x00ff
+        65280     0xff00
+        byte4-byte3-byte2-byte1
+        byte1-byte2-byte3-byte4
+    '''
+    L = (L & 255) << 24 | (L & 65280) << 8 | L >> 8 & 65280 | L >> 24 & 255
+    return(L)
