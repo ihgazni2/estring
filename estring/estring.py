@@ -1968,6 +1968,12 @@ def split(s,sp="",limit=None):
     spans = []
     for m in it:
         spans.append(m.span())
+    ####
+    if(len(spans)  == 0):
+        return(s)
+    else:
+        pass
+    ####
     reserved = elel.rangize_supplement(spans,s.__len__())
     def cond_func(ele,s):
         return(slice(s,*ele))
